@@ -34,7 +34,7 @@ export const CssParts: Story = {
       }
     </style>
     <lf-form-error error="This field is required."></lf-form-error>
-    <p style="font-size:0.75rem; color:#6b7280; margin:0.5rem 0 0">
+    <p style="font-size:0.75rem; color:var(--lf-color-hint, #6b7280); margin:0.5rem 0 0">
       <code style="color:#dc2626">::part(error)</code> — the error text container
     </p>
   `,

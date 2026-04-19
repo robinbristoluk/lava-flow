@@ -85,7 +85,7 @@ export const CssParts: Story = {
       }
     </style>
     <lf-textarea placeholder="Enter text…" style="width: min(22rem, 100%)"></lf-textarea>
-    <p style="font-size:0.75rem; color:#6b7280; margin:0.5rem 0 0">
+    <p style="font-size:0.75rem; color:var(--lf-color-hint, #6b7280); margin:0.5rem 0 0">
       <code style="color:#7c3aed">::part(textarea)</code> — the native <code>&lt;textarea&gt;</code> element
     </p>
   `,
@@ -191,7 +191,7 @@ export const WithLabelAndHint: Story = {
       <lf-form-hint id="bio-hint" hint="Keep it under 200 characters."></lf-form-hint>
       <lf-form-error id="bio-error" error="Bio is required."></lf-form-error>
     </div>
-    <p style="font-size:0.75rem; color:#6b7280; margin:0.75rem 0 0">
+    <p style="font-size:0.75rem; color:var(--lf-color-hint, #6b7280); margin:0.75rem 0 0">
       Use <code>field-id</code> to connect <code>&lt;lf-label&gt;</code> and
       <code>described-by</code> to wire <code>aria-describedby</code> to external
       <code>&lt;lf-form-hint&gt;</code> / <code>&lt;lf-form-error&gt;</code> elements.

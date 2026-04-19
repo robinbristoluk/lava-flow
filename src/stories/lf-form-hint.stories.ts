@@ -34,7 +34,7 @@ export const CssParts: Story = {
       }
     </style>
     <lf-form-hint hint="We'll never share your email."></lf-form-hint>
-    <p style="font-size:0.75rem; color:#6b7280; margin:0.5rem 0 0">
+    <p style="font-size:0.75rem; color:var(--lf-color-hint, #6b7280); margin:0.5rem 0 0">
       <code style="color:#d97706">::part(hint)</code> — the hint text container
     </p>
   `,

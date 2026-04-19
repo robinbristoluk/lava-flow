@@ -64,7 +64,8 @@ The component is form-associated: its `name` + `value` participate in `<form>` s
 
 **Events**
 
-- `lf-change` — fired on every input event; `event.detail.value` holds the current value.
+- `lf-input` — fired on every keystroke (input/textarea modes); `event.detail.value` holds the current value.
+- `lf-change` — fired when the value is committed (blur / Enter in input/textarea modes, or whenever the select value changes); `event.detail.value` holds the value.
 
 **CSS parts**: `field`, `label`, `input`, `hint`, `error`
 
@@ -135,6 +136,14 @@ unlayered consumer rule automatic override precedence.
 
 | Token | Default | Group |
 |---|---|---|
+| `--lf-color-primary` | `#5b21b6` | Colour |
+| `--lf-color-primary-hover` | `#4c1d95` | Colour |
+| `--lf-color-on-primary` | `#ffffff` | Colour |
+| `--lf-color-secondary` | `#ffffff` | Colour |
+| `--lf-color-secondary-hover` | `#f5f3ff` | Colour |
+| `--lf-color-secondary-border` | `#5b21b6` | Colour |
+| `--lf-color-on-secondary` | `#4c1d95` | Colour |
+| `--lf-color-focus-ring` | `#7c3aed` | Colour |
 | `--lf-color-label` | `#374151` | Colour |
 | `--lf-color-hint` | `#6b7280` | Colour |
 | `--lf-color-error` | `#dc2626` | Colour |
@@ -145,7 +154,6 @@ unlayered consumer rule automatic override precedence.
 | `--lf-color-input-placeholder` | `#9ca3af` | Colour |
 | `--lf-color-input-disabled-bg` | `#f3f4f6` | Colour |
 | `--lf-color-input-disabled-text` | `#9ca3af` | Colour |
-| `--lf-color-focus-ring` | `#7c3aed` | Colour |
 | `--lf-space-2` | `0.5rem` | Spacing |
 | `--lf-space-3` | `0.625rem` | Spacing |
 | `--lf-space-4` | `1rem` | Spacing |
@@ -154,7 +162,13 @@ unlayered consumer rule automatic override precedence.
 | `--lf-font-size-sm` | `0.875rem` | Typography |
 | `--lf-font-weight-semibold` | `600` | Typography |
 | `--lf-line-height-base` | `1.2` | Typography |
+| `--lf-radius-sm` | `0.25rem` | Radius |
 | `--lf-radius-md` | `0.625rem` | Radius |
+| `--lf-transition-duration` | `150ms` | Motion |
+| `--lf-transition-easing` | `ease` | Motion |
+| `--lf-shadow-popover` | `0 4px 12px rgb(0 0 0 / 10%)` | Shadow |
+| `--lf-checkbox-size` | `1.125rem` | Component sizes |
+| `--lf-radio-size` | `1.125rem` | Component sizes |
 
 ### Overriding tokens
 

@@ -109,7 +109,16 @@ export const CssParts: CheckboxStory = {
 
 export const WithinAForm: CheckboxStory = {
   name: 'Within a <form>',
-  render: () => html`
+  args: {
+    label: 'I agree to the terms and conditions',
+    name: 'agree',
+    value: 'agreed',
+    checked: false,
+    required: true,
+    disabled: false,
+    error: '',
+  },
+  render: (args) => html`
     <form
       style="display:grid; gap:1rem; width:min(24rem, 100%)"
       @submit=${(e: Event) => {
@@ -123,10 +132,13 @@ export const WithinAForm: CheckboxStory = {
       }}
     >
       <lf-checkbox
-        label="I agree to the terms and conditions"
-        name="agree"
-        value="agreed"
-        required
+        label=${args.label}
+        name=${args.name}
+        value=${args.value ?? 'on'}
+        error=${args.error ?? ''}
+        ?checked=${args.checked}
+        ?required=${args.required}
+        ?disabled=${args.disabled}
       ></lf-checkbox>
       <button type="submit" style="padding:0.625rem 1rem; cursor:pointer">Submit</button>
     </form>

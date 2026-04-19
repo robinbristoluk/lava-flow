@@ -908,6 +908,25 @@ describe('lf-checkbox-group', () => {
 
     el.remove()
   })
+
+  it('value array contains all selected values after multiple checkboxes are checked', async () => {
+    const el = new LfCheckboxGroup()
+    el.options = CHECKBOX_OPTIONS
+    el.value = []
+    document.body.append(el)
+    await el.updateComplete
+
+    const checkboxes = el.shadowRoot?.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>
+
+    checkboxes[0]!.checked = true
+    checkboxes[0]!.dispatchEvent(new Event('change', { bubbles: true }))
+    checkboxes[2]!.checked = true
+    checkboxes[2]!.dispatchEvent(new Event('change', { bubbles: true }))
+
+    expect(el.value).toEqual(['x', 'z'])
+
+    el.remove()
+  })
 })
 
 // ─── lf-checkbox ──────────────────────────────────────────────────────────────

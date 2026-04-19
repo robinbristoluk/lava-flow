@@ -126,7 +126,12 @@ export const WithinAForm: CheckboxGroupStory = {
       @submit=${(e: Event) => {
         e.preventDefault()
         const data = new FormData(e.target as HTMLFormElement)
-        alert('Submitted: ' + JSON.stringify(Object.fromEntries(data)))
+        const result: Record<string, string | string[]> = {}
+        for (const key of new Set(data.keys())) {
+          const vals = data.getAll(key) as string[]
+          result[key] = vals.length === 1 ? (vals[0] as string) : vals
+        }
+        alert('Submitted: ' + JSON.stringify(result))
       }}
     >
       <lf-checkbox-group

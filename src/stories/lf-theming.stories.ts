@@ -271,7 +271,7 @@ const ROLE_META: Record<
   },
   warning: {
     label: 'Warning',
-    icon: '⚠\uFE0E',
+    icon: '!',
     message: 'Please review before continuing.',
     complementaryLabel: 'Red',
     complementaryProgressLabel: 'Critical',
@@ -279,7 +279,7 @@ const ROLE_META: Record<
   },
   info: {
     label: 'Info',
-    icon: 'ℹ\uFE0E',
+    icon: 'i',
     message: 'New features are available in this release.',
     complementaryLabel: 'Violet',
     complementaryProgressLabel: 'Action needed',

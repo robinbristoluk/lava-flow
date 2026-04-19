@@ -73,3 +73,21 @@ export const SecondaryWithIcon: Story = {
     </lf-button>
   `,
 }
+
+export const CustomTokens: Story = {
+  name: 'Custom tokens',
+  render: () => html`
+    <style>
+      .token-demo {
+        --lf-color-primary: #0ea5e9;
+        --lf-color-primary-hover: #0284c7;
+        --lf-color-focus-ring: #0284c7;
+        --lf-radius-md: 9999px;
+      }
+    </style>
+    <div class="token-demo" style="display:grid; gap:0.75rem; width:min(22rem, 100%);">
+      <lf-button label="Custom primary"></lf-button>
+      <lf-button variant="secondary" label="Custom secondary"></lf-button>
+    </div>
+  `,
+}

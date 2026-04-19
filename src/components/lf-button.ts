@@ -12,14 +12,21 @@ export type LfButtonVariant = 'primary' | 'secondary'
  * @csspart button - Native button element.
  * @csspart icon - Icon container.
  * @csspart label - Visible button text.
- * @cssprop [--lf-primary-bg=#5b21b6] - Primary button background color.
- * @cssprop [--lf-primary-bg-hover=#4c1d95] - Primary button hover background color.
- * @cssprop [--lf-primary-text=#ffffff] - Primary button text color.
- * @cssprop [--lf-secondary-bg=#ffffff] - Secondary button background color.
- * @cssprop [--lf-secondary-bg-hover=#f5f3ff] - Secondary button hover background color.
- * @cssprop [--lf-secondary-border=#5b21b6] - Secondary button border color.
- * @cssprop [--lf-secondary-text=#4c1d95] - Secondary button text color.
- * @cssprop [--lf-focus-ring=#7c3aed] - Focus ring color.
+ * @cssprop [--lf-color-primary=#5b21b6] - Primary button background.
+ * @cssprop [--lf-color-primary-hover=#4c1d95] - Primary button hover background.
+ * @cssprop [--lf-color-on-primary=#ffffff] - Text on primary button.
+ * @cssprop [--lf-color-secondary=#ffffff] - Secondary button background.
+ * @cssprop [--lf-color-secondary-hover=#f5f3ff] - Secondary button hover background.
+ * @cssprop [--lf-color-secondary-border=#5b21b6] - Secondary button border.
+ * @cssprop [--lf-color-on-secondary=#4c1d95] - Text on secondary button.
+ * @cssprop [--lf-color-focus-ring=#7c3aed] - Focus ring color.
+ * @cssprop [--lf-radius-md=0.625rem] - Button corner radius.
+ * @cssprop [--lf-font-family-base=system-ui] - Button font family.
+ * @cssprop [--lf-font-size-base=1rem] - Button font size.
+ * @cssprop [--lf-font-weight-semibold=600] - Button font weight.
+ * @cssprop [--lf-space-2=0.5rem] - Gap between icon and label.
+ * @cssprop [--lf-space-3=0.625rem] - Button block padding.
+ * @cssprop [--lf-space-4=1rem] - Button inline padding.
  */
 @customElement('lf-button')
 export class LfButton extends LitElement {

@@ -1,3 +1,5 @@
+import '../src/styles/tokens.scss'
+
 import type { Preview } from '@storybook/web-components-vite'
 
 const preview: Preview = {

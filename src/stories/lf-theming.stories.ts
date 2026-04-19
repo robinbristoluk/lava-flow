@@ -255,7 +255,7 @@ const ROLE_META: Record<
 > = {
   primary: {
     label: 'Primary',
-    icon: '★',
+    icon: '*',
     message: 'This action uses your primary brand colour.',
     complementaryLabel: 'Amber',
     complementaryProgressLabel: 'Milestone',
@@ -263,7 +263,7 @@ const ROLE_META: Record<
   },
   success: {
     label: 'Success',
-    icon: '✓',
+    icon: 'v',
     message: 'Your changes have been saved successfully.',
     complementaryLabel: 'Cyan',
     complementaryProgressLabel: 'In review',
@@ -336,7 +336,6 @@ const variationCard = (role: (typeof COLOUR_ROLES)[number]) => {
             flex-shrink: 0;
             font-family: var(--lf-font-family-base, system-ui, sans-serif);
             font-size: 0.75rem;
-            font-variant-emoji: text;
             font-weight: 700;
             height: 1.375rem;
             justify-content: center;

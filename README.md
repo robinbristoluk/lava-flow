@@ -174,7 +174,7 @@ Each of the five semantic colour roles — **primary**, **success**, **warning**
 | `--lf-color-on-primary` | `#ffffff` | `#ffffff` |
 | `--lf-color-primary-accent` | `#ede9fe` | `#1e1b4b` |
 | `--lf-color-primary-contrast` | `#2e1065` | `#c4b5fd` |
-| `--lf-color-primary-complementary` | `#f59e0b` | `#fbbf24` |
+| `--lf-color-primary-complementary` | `#b45309` | `#fbbf24` |
 
 #### Secondary (utility)
 
@@ -191,10 +191,10 @@ Each of the five semantic colour roles — **primary**, **success**, **warning**
 |---|---|---|
 | `--lf-color-success` | `#16a34a` | `#4ade80` |
 | `--lf-color-success-hover` | `#15803d` | `#22c55e` |
-| `--lf-color-on-success` | `#ffffff` | `#052e16` |
+| `--lf-color-on-success` | `#052e16` | `#052e16` |
 | `--lf-color-success-accent` | `#dcfce7` | `#052e16` |
 | `--lf-color-success-contrast` | `#14532d` | `#86efac` |
-| `--lf-color-success-complementary` | `#0891b2` | `#22d3ee` |
+| `--lf-color-success-complementary` | `#0e7490` | `#22d3ee` |
 
 #### Warning (amber)
 
@@ -202,7 +202,7 @@ Each of the five semantic colour roles — **primary**, **success**, **warning**
 |---|---|---|
 | `--lf-color-warning` | `#d97706` | `#fbbf24` |
 | `--lf-color-warning-hover` | `#b45309` | `#f59e0b` |
-| `--lf-color-on-warning` | `#ffffff` | `#431407` |
+| `--lf-color-on-warning` | `#431407` | `#431407` |
 | `--lf-color-warning-accent` | `#fef3c7` | `#431407` |
 | `--lf-color-warning-contrast` | `#78350f` | `#fde68a` |
 | `--lf-color-warning-complementary` | `#dc2626` | `#f87171` |
@@ -225,7 +225,7 @@ Each of the five semantic colour roles — **primary**, **success**, **warning**
 | `--lf-color-error` | `#dc2626` | `#f87171` |
 | `--lf-color-error-accent` | `#fee2e2` | `#450a0a` |
 | `--lf-color-error-contrast` | `#7f1d1d` | `#fca5a5` |
-| `--lf-color-error-complementary` | `#d97706` | `#fbbf24` |
+| `--lf-color-error-complementary` | `#b45309` | `#fbbf24` |
 
 #### Surface, interactive, and form tokens
 

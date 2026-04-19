@@ -29,6 +29,27 @@ export type LfInputMode =
   | 'email'
   | 'url'
 
+/** A single option in a select control. */
+export interface LfSelectOption {
+  /** Display label shown to the user. */
+  label: string
+  /** Value submitted with form data. */
+  value: string
+  /** Prevents the option from being selected when true. */
+  disabled?: boolean
+}
+
+/** A labelled group of options in a select control. */
+export interface LfSelectOptionGroup {
+  /** Heading text rendered above the group. */
+  group: string
+  /** Options belonging to this group. */
+  options: LfSelectOption[]
+}
+
+/** Either a standalone option or a labelled group of options. */
+export type LfSelectOptionItem = LfSelectOption | LfSelectOptionGroup
+
 /**
  * Full set of properties shared across lava-flow form components.
  * Each component implements a `Pick<LfAllFormProps, ...>` of the
@@ -70,4 +91,6 @@ export interface LfAllFormProps {
   rows: number
   /** resize behaviour (textarea only) */
   resize: LfTextareaResize
+  /** options rendered by a select control */
+  options: LfSelectOptionItem[]
 }

@@ -1,10 +1,20 @@
 export { LfLabel } from './components/lf-label'
 export { LfInput } from './components/lf-input'
 export { LfTextarea } from './components/lf-textarea'
+export { LfSelect } from './components/lf-select'
 export { LfFormHint } from './components/lf-form-hint'
 export { LfFormError } from './components/lf-form-error'
 export { LfFormField } from './components/lf-form-field'
 export { LfRadioGroup } from './components/lf-radio-group'
 export { LfCheckboxGroup } from './components/lf-checkbox-group'
 export { LfCheckbox } from './components/lf-checkbox'
-export type { LfAllFormProps, LfInputType, LfInputMode, LfTextareaResize, LfOption } from './types/form-field'
+export type {
+  LfAllFormProps,
+  LfInputType,
+  LfInputMode,
+  LfTextareaResize,
+  LfOption,
+  LfSelectOption,
+  LfSelectOptionGroup,
+  LfSelectOptionItem,
+} from './types/form-field'

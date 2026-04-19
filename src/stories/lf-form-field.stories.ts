@@ -2,6 +2,16 @@ import { html } from 'lit'
 import type { Meta, StoryObj } from '@storybook/web-components-vite'
 
 import '../components/lf-form-field'
+import type { LfSelectOptionItem } from '../types/form-field'
+
+const COUNTRIES: LfSelectOptionItem[] = [
+  { label: 'United Kingdom', value: 'gb' },
+  { label: 'United States', value: 'us' },
+  { label: 'Canada', value: 'ca' },
+  { label: 'Australia', value: 'au' },
+  { label: 'Germany', value: 'de' },
+  { label: 'France', value: 'fr' },
+]
 
 const meta: Meta = {
   title: 'Form/LfFormField',
@@ -267,5 +277,93 @@ export const Multiline: FieldStory = {
       ?readonly=${args.readonly}
       style="width: min(24rem, 100%)"
     ></lf-form-field>
+  `,
+}
+
+// ─── Select mode stories ───────────────────────────────────────────────────────
+
+export const SelectDefault: FieldStory = {
+  name: 'Select — Default',
+  args: {
+    label: 'Country',
+    name: 'country',
+    placeholder: 'Select a country…',
+    hint: 'Choose your country of residence.',
+  },
+  render: (args) => html`
+    <lf-form-field
+      label=${args.label}
+      name=${args.name}
+      control="select"
+      .value=${args.value ?? ''}
+      placeholder=${args.placeholder ?? ''}
+      hint=${args.hint ?? ''}
+      error=${args.error ?? ''}
+      .options=${COUNTRIES}
+      ?required=${args.required}
+      ?disabled=${args.disabled}
+      ?readonly=${args.readonly}
+      style="width: min(24rem, 100%)"
+    ></lf-form-field>
+  `,
+}
+
+export const SelectWithError: FieldStory = {
+  name: 'Select — With Error',
+  args: {
+    label: 'Country',
+    name: 'country',
+    placeholder: 'Select a country…',
+    error: 'Please select a country.',
+    required: true,
+  },
+  render: (args) => html`
+    <lf-form-field
+      label=${args.label}
+      name=${args.name}
+      control="select"
+      .value=${args.value ?? ''}
+      placeholder=${args.placeholder ?? ''}
+      hint=${args.hint ?? ''}
+      error=${args.error ?? ''}
+      .options=${COUNTRIES}
+      ?required=${args.required}
+      ?disabled=${args.disabled}
+      ?readonly=${args.readonly}
+      style="width: min(24rem, 100%)"
+    ></lf-form-field>
+  `,
+}
+
+export const SelectWithinAForm: FieldStory = {
+  name: 'Select — Within a <form>',
+  args: {
+    label: 'Country',
+    name: 'country',
+    placeholder: 'Select a country…',
+    required: true,
+  },
+  render: (args) => html`
+    <form
+      style="display:grid; gap:1rem; width:min(24rem, 100%)"
+      @submit=${(e: Event) => {
+        e.preventDefault()
+        alert('Submitted: ' + JSON.stringify(Object.fromEntries(new FormData(e.target as HTMLFormElement))))
+      }}
+    >
+      <lf-form-field
+        label=${args.label}
+        name=${args.name}
+        control="select"
+        .value=${args.value ?? ''}
+        placeholder=${args.placeholder ?? ''}
+        hint=${args.hint ?? ''}
+        .options=${COUNTRIES}
+        ?required=${args.required}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+      ></lf-form-field>
+      <button type="submit" style="padding:0.625rem 1rem; cursor:pointer">Submit</button>
+    </form>
   `,
 }

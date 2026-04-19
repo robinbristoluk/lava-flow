@@ -1,0 +1,29 @@
+@use './select-control' as sc;
+
+:host {
+  display: block;
+  max-width: 100%;
+  position: relative;
+}
+
+:host([disabled]) {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.select-wrapper {
+  // Wrapper is implicit (the host itself) in lf-select; shared styles scoped below.
+}
+
+@include sc.trigger('trigger', 'icon');
+@include sc.invalid-trigger('trigger');
+@include sc.readonly-trigger(':host([data-readonly])', 'trigger');
+@include sc.value('value');
+@include sc.placeholder('placeholder');
+@include sc.icon('icon');
+@include sc.listbox('listbox', 'listbox--open');
+@include sc.option('option');
+@include sc.group('group');
+@include sc.group-label('group-label');
+@include sc.group-options('group-options');
+@include sc.mobile-trigger('trigger');

@@ -43,79 +43,79 @@ export const Default: CheckboxGroupStory = {
     required: false,
     disabled: false,
   },
-  render: (args) => {
-    const el = document.createElement('lf-checkbox-group')
-    el.label = args.label
-    el.name = args.name
-    el.hint = args.hint ?? ''
-    el.error = args.error ?? ''
-    el.required = args.required ?? false
-    el.disabled = args.disabled ?? false
-    el.options = OPTIONS
-    el.value = []
-    el.style.cssText = 'width: min(24rem, 100%)'
-    return el
-  },
+  render: (args) => html`
+    <lf-checkbox-group
+      label=${args.label}
+      name=${args.name}
+      hint=${args.hint ?? ''}
+      error=${args.error ?? ''}
+      ?required=${args.required}
+      ?disabled=${args.disabled}
+      .options=${OPTIONS}
+      .value=${[]}
+      style="width: min(24rem, 100%)"
+    ></lf-checkbox-group>
+  `,
 }
 
 export const WithSelectedValues: CheckboxGroupStory = {
   name: 'Pre-selected values',
-  render: () => {
-    const el = document.createElement('lf-checkbox-group')
-    el.label = 'Favourite technologies'
-    el.name = 'tech'
-    el.value = ['html', 'css']
-    el.options = OPTIONS
-    el.style.cssText = 'width: min(24rem, 100%)'
-    return el
-  },
+  render: () => html`
+    <lf-checkbox-group
+      label="Favourite technologies"
+      name="tech"
+      .value=${['html', 'css']}
+      .options=${OPTIONS}
+      style="width: min(24rem, 100%)"
+    ></lf-checkbox-group>
+  `,
 }
 
 export const WithError: CheckboxGroupStory = {
   name: 'With error',
-  render: () => {
-    const el = document.createElement('lf-checkbox-group')
-    el.label = 'Favourite technologies'
-    el.name = 'tech'
-    el.error = 'Please select at least one option.'
-    el.required = true
-    el.options = OPTIONS
-    el.value = []
-    el.style.cssText = 'width: min(24rem, 100%)'
-    return el
-  },
+  render: () => html`
+    <lf-checkbox-group
+      label="Favourite technologies"
+      name="tech"
+      error="Please select at least one option."
+      required
+      .options=${OPTIONS}
+      .value=${[]}
+      style="width: min(24rem, 100%)"
+    ></lf-checkbox-group>
+  `,
 }
 
 export const Disabled: CheckboxGroupStory = {
   name: 'Disabled',
-  render: () => {
-    const el = document.createElement('lf-checkbox-group')
-    el.label = 'Favourite technologies'
-    el.name = 'tech'
-    el.disabled = true
-    el.value = ['css']
-    el.options = OPTIONS
-    el.style.cssText = 'width: min(24rem, 100%)'
-    return el
-  },
+  render: () => html`
+    <lf-checkbox-group
+      label="Favourite technologies"
+      name="tech"
+      disabled
+      .value=${['css']}
+      .options=${OPTIONS}
+      style="width: min(24rem, 100%)"
+    ></lf-checkbox-group>
+  `,
 }
 
 export const PartiallyDisabled: CheckboxGroupStory = {
   name: 'Partially disabled options',
-  render: () => {
-    const el = document.createElement('lf-checkbox-group')
-    el.label = 'Favourite technologies'
-    el.name = 'tech'
-    el.options = [
-      { value: 'html', label: 'HTML' },
-      { value: 'css', label: 'CSS (unavailable)', disabled: true },
-      { value: 'js', label: 'JavaScript' },
-      { value: 'ts', label: 'TypeScript' },
-    ]
-    el.value = []
-    el.style.cssText = 'width: min(24rem, 100%)'
-    return el
-  },
+  render: () => html`
+    <lf-checkbox-group
+      label="Favourite technologies"
+      name="tech"
+      .options=${[
+        { value: 'html', label: 'HTML' },
+        { value: 'css', label: 'CSS (unavailable)', disabled: true },
+        { value: 'js', label: 'JavaScript' },
+        { value: 'ts', label: 'TypeScript' },
+      ]}
+      .value=${[]}
+      style="width: min(24rem, 100%)"
+    ></lf-checkbox-group>
+  `,
 }
 
 export const WithinAForm: CheckboxGroupStory = {

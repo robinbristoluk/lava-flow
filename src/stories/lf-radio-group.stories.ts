@@ -45,76 +45,76 @@ export const Default: RadioStory = {
     required: false,
     disabled: false,
   },
-  render: (args) => {
-    const el = document.createElement('lf-radio-group')
-    el.setAttribute('label', args.label)
-    el.setAttribute('name', args.name)
-    el.value = args.value ?? ''
-    el.hint = args.hint ?? ''
-    el.error = args.error ?? ''
-    el.required = args.required ?? false
-    el.disabled = args.disabled ?? false
-    el.options = OPTIONS
-    el.style.cssText = 'width: min(24rem, 100%)'
-    return el
-  },
+  render: (args) => html`
+    <lf-radio-group
+      label=${args.label}
+      name=${args.name}
+      .value=${args.value ?? ''}
+      hint=${args.hint ?? ''}
+      error=${args.error ?? ''}
+      ?required=${args.required}
+      ?disabled=${args.disabled}
+      .options=${OPTIONS}
+      style="width: min(24rem, 100%)"
+    ></lf-radio-group>
+  `,
 }
 
 export const WithSelectedValue: RadioStory = {
   name: 'Pre-selected value',
-  render: () => {
-    const el = document.createElement('lf-radio-group')
-    el.label = 'Shirt size'
-    el.name = 'size'
-    el.value = 'medium'
-    el.options = OPTIONS
-    el.style.cssText = 'width: min(24rem, 100%)'
-    return el
-  },
+  render: () => html`
+    <lf-radio-group
+      label="Shirt size"
+      name="size"
+      .value=${'medium'}
+      .options=${OPTIONS}
+      style="width: min(24rem, 100%)"
+    ></lf-radio-group>
+  `,
 }
 
 export const WithError: RadioStory = {
   name: 'With error',
-  render: () => {
-    const el = document.createElement('lf-radio-group')
-    el.label = 'Shirt size'
-    el.name = 'size'
-    el.error = 'Please select a size.'
-    el.required = true
-    el.options = OPTIONS
-    el.style.cssText = 'width: min(24rem, 100%)'
-    return el
-  },
+  render: () => html`
+    <lf-radio-group
+      label="Shirt size"
+      name="size"
+      error="Please select a size."
+      required
+      .options=${OPTIONS}
+      style="width: min(24rem, 100%)"
+    ></lf-radio-group>
+  `,
 }
 
 export const Disabled: RadioStory = {
   name: 'Disabled',
-  render: () => {
-    const el = document.createElement('lf-radio-group')
-    el.label = 'Shirt size'
-    el.name = 'size'
-    el.disabled = true
-    el.value = 'small'
-    el.options = OPTIONS
-    el.style.cssText = 'width: min(24rem, 100%)'
-    return el
-  },
+  render: () => html`
+    <lf-radio-group
+      label="Shirt size"
+      name="size"
+      disabled
+      .value=${'small'}
+      .options=${OPTIONS}
+      style="width: min(24rem, 100%)"
+    ></lf-radio-group>
+  `,
 }
 
 export const PartiallyDisabled: RadioStory = {
   name: 'Partially disabled options',
-  render: () => {
-    const el = document.createElement('lf-radio-group')
-    el.label = 'Shirt size'
-    el.name = 'size'
-    el.options = [
-      { value: 'small', label: 'Small' },
-      { value: 'medium', label: 'Medium (sold out)', disabled: true },
-      { value: 'large', label: 'Large' },
-    ]
-    el.style.cssText = 'width: min(24rem, 100%)'
-    return el
-  },
+  render: () => html`
+    <lf-radio-group
+      label="Shirt size"
+      name="size"
+      .options=${[
+        { value: 'small', label: 'Small' },
+        { value: 'medium', label: 'Medium (sold out)', disabled: true },
+        { value: 'large', label: 'Large' },
+      ]}
+      style="width: min(24rem, 100%)"
+    ></lf-radio-group>
+  `,
 }
 
 export const WithinAForm: RadioStory = {

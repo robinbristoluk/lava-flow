@@ -2,6 +2,7 @@ import { html } from 'lit'
 import type { Meta, StoryObj } from '@storybook/web-components-vite'
 
 import '../components/lf-checkbox'
+import '../components/lf-form-error'
 
 const meta: Meta = {
   title: 'Form/LfCheckbox',

@@ -69,7 +69,7 @@ export const Default: Story = {
     readonly: false,
   },
   render: (args) => html`
-    <label for="select-demo" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:#374151">
+    <label for="select-demo" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:var(--lf-color-label, #374151)">
       Country
     </label>
     <lf-select
@@ -94,7 +94,7 @@ export const WithSelectedValue: Story = {
     value: 'gb',
   },
   render: (args) => html`
-    <label for="select-prefilled" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:#374151">
+    <label for="select-prefilled" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:var(--lf-color-label, #374151)">
       Country
     </label>
     <lf-select
@@ -114,8 +114,8 @@ export const Required: Story = {
     required: true,
   },
   render: (args) => html`
-    <label for="select-required" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:#374151">
-      Country <span aria-hidden="true" style="color:#dc2626">*</span>
+    <label for="select-required" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:var(--lf-color-label, #374151)">
+      Country <span aria-hidden="true" style="color:var(--lf-color-error, #dc2626)">*</span>
     </label>
     <lf-select
       field-id="select-required"
@@ -126,7 +126,7 @@ export const Required: Story = {
       ?required=${args.required}
       style="width: min(22rem, 100%)"
     ></lf-select>
-    <p style="font-size:0.75rem; color:#6b7280; margin:0.375rem 0 0">
+    <p style="font-size:0.75rem; color:var(--lf-color-hint, #6b7280); margin:0.375rem 0 0">
       Tab away without selecting to see validation state.
     </p>
   `,
@@ -138,7 +138,7 @@ export const WithError: Story = {
     error: 'Please select a country.',
   },
   render: (args) => html`
-    <label for="select-error" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:#374151">
+    <label for="select-error" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:var(--lf-color-label, #374151)">
       Country
     </label>
     <lf-select
@@ -150,7 +150,7 @@ export const WithError: Story = {
       .options=${COUNTRIES}
       style="width: min(22rem, 100%)"
     ></lf-select>
-    <span role="alert" style="display:block; font-size:0.875rem; color:#dc2626; margin-top:0.25rem">
+    <span role="alert" style="display:block; font-size:0.875rem; color:var(--lf-color-error, #dc2626); margin-top:0.25rem">
       ${args.error}
     </span>
   `,
@@ -163,7 +163,7 @@ export const Disabled: Story = {
     disabled: true,
   },
   render: (args) => html`
-    <label for="select-disabled" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:#374151">
+    <label for="select-disabled" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:var(--lf-color-label, #374151)">
       Country
     </label>
     <lf-select
@@ -185,7 +185,7 @@ export const ReadOnly: Story = {
     readonly: true,
   },
   render: (args) => html`
-    <label for="select-readonly" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:#374151">
+    <label for="select-readonly" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:var(--lf-color-label, #374151)">
       Country
     </label>
     <lf-select
@@ -205,7 +205,7 @@ export const GroupedOptions: Story = {
     placeholder: 'Pick a food…',
   },
   render: (args) => html`
-    <label for="select-grouped" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:#374151">
+    <label for="select-grouped" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:var(--lf-color-label, #374151)">
       Favourite food
     </label>
     <lf-select
@@ -216,7 +216,7 @@ export const GroupedOptions: Story = {
       .options=${GROUPED_OPTIONS}
       style="width: min(22rem, 100%)"
     ></lf-select>
-    <p style="font-size:0.75rem; color:#6b7280; margin:0.375rem 0 0">
+    <p style="font-size:0.75rem; color:var(--lf-color-hint, #6b7280); margin:0.375rem 0 0">
       'Spinach' is a disabled option inside the Vegetables group.
     </p>
   `,
@@ -239,8 +239,8 @@ export const WithinAForm: Story = {
       }}
     >
       <div>
-        <label for="form-country" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:#374151">
-          Country <span aria-hidden="true" style="color:#dc2626">*</span>
+        <label for="form-country" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:var(--lf-color-label, #374151)">
+          Country <span aria-hidden="true" style="color:var(--lf-color-error, #dc2626)">*</span>
         </label>
         <lf-select
           field-id="form-country"
@@ -280,7 +280,7 @@ export const CssParts: Story = {
         outline-offset: -1px;
       }
     </style>
-    <label for="select-parts-trigger" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:#374151">
+    <label for="select-parts-trigger" style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.375rem; color:var(--lf-color-label, #374151)">
       Country (click to open)
     </label>
     <lf-select
@@ -291,12 +291,12 @@ export const CssParts: Story = {
       .options=${COUNTRIES}
       style="width: min(22rem, 100%)"
     ></lf-select>
-    <ul style="font-size:0.75rem; color:#6b7280; margin:0.75rem 0 0; padding-left:1.25rem; display:grid; gap:0.25rem">
+    <ul style="font-size:0.75rem; color:var(--lf-color-hint, #6b7280); margin:0.75rem 0 0; padding-left:1.25rem; display:grid; gap:0.25rem">
       <li><code style="color:#7c3aed">::part(trigger)</code> — the trigger button</li>
       <li><code style="color:#059669">::part(value)</code> — the displayed value / placeholder text</li>
       <li><code style="color:#d97706">::part(icon)</code> — the chevron icon</li>
       <li><code style="color:#2563eb">::part(listbox)</code> — the popup listbox (open to see)</li>
-      <li><code style="color:#6b7280">::part(option)</code> — each option row (open to see)</li>
+      <li><code style="color:var(--lf-color-hint, #6b7280)">::part(option)</code> — each option row (open to see)</li>
     </ul>
   `,
 }

@@ -1,4 +1,6 @@
 @use './select-control' as sc;
+@use './input-control' as ic;
+@use './text-helpers' as th;
 
 :host {
   display: block;
@@ -15,30 +17,15 @@
   gap: var(--lf-space-2, 0.5rem);
 }
 
-.label {
-  color: var(--lf-color-label, #374151);
-  font-family: var(--lf-font-family-base, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-  font-size: var(--lf-font-size-sm, 0.875rem);
-  font-weight: var(--lf-font-weight-semibold, 600);
-  line-height: var(--lf-line-height-base, 1.2);
-}
+@include th.label-text('.label');
 
-.input,
-textarea.input {
-  background-color: var(--lf-color-input-bg, #ffffff);
-  border: 1px solid var(--lf-color-input-border, #d1d5db);
-  border-radius: var(--lf-radius-md, 0.625rem);
-  color: var(--lf-color-input-text, #111827);
-  display: block;
-  font-family: var(--lf-font-family-base, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-  font-size: var(--lf-font-size-base, 1rem);
-  line-height: var(--lf-line-height-base, 1.2);
-  min-height: 2.75rem;
-  padding: var(--lf-space-3, 0.625rem) var(--lf-space-4, 1rem);
-  transition: border-color 150ms ease, box-shadow 150ms ease;
-  width: 100%;
-}
+@include ic.base('input');
+@include ic.placeholder('input');
+@include ic.focus('input');
+@include ic.disabled('input');
+@include ic.invalid('input');
 
+// Textarea overrides: box-sizing, taller min-height, resize handle, 1.5 line-height.
 textarea.input {
   box-sizing: border-box;
   line-height: var(--lf-line-height-base, 1.5);
@@ -46,41 +33,8 @@ textarea.input {
   resize: var(--lf-textarea-resize, vertical);
 }
 
-.input::placeholder {
-  color: var(--lf-color-input-placeholder, #9ca3af);
-}
-
-.input:focus-visible {
-  border-color: var(--lf-color-input-border-focus, #5b21b6);
-  outline: 2px solid var(--lf-color-focus-ring, #7c3aed);
-  outline-offset: 2px;
-}
-
-.input:disabled {
-  background-color: var(--lf-color-input-disabled-bg, #f3f4f6);
-  color: var(--lf-color-input-disabled-text, #9ca3af);
-  cursor: not-allowed;
-}
-
-:host([data-invalid]) .input {
-  border-color: var(--lf-color-error, #dc2626);
-}
-
-.hint {
-  color: var(--lf-color-hint, #6b7280);
-  display: block;
-  font-family: var(--lf-font-family-base, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-  font-size: var(--lf-font-size-sm, 0.875rem);
-  line-height: var(--lf-line-height-base, 1.2);
-}
-
-.error {
-  color: var(--lf-color-error, #dc2626);
-  display: block;
-  font-family: var(--lf-font-family-base, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-  font-size: var(--lf-font-size-sm, 0.875rem);
-  line-height: var(--lf-line-height-base, 1.2);
-}
+@include th.hint-text('.hint');
+@include th.error-text('.error');
 
 // ─── Select control ───────────────────────────────────────────────────────────
 // Styles for control="select" mode. Shared declarations come from the
@@ -113,3 +67,4 @@ textarea.input {
 }
 
 @include sc.mobile-trigger('select-trigger');
+

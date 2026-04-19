@@ -1,0 +1,61 @@
+// Shared input / textarea control styles.
+// @use './input-control' as ic; then call the mixins with the target class name.
+
+// Base appearance: background, border, radius, font, padding, min-height, transition.
+@mixin base($class) {
+  .#{$class} {
+    background-color: var(--lf-color-input-bg, #ffffff);
+    border: 1px solid var(--lf-color-input-border, #d1d5db);
+    border-radius: var(--lf-radius-md, 0.625rem);
+    color: var(--lf-color-input-text, #111827);
+    display: block;
+    font-family: var(--lf-font-family-base, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    font-size: var(--lf-font-size-base, 1rem);
+    line-height: var(--lf-line-height-base, 1.2);
+    min-height: 2.75rem;
+    padding: var(--lf-space-3, 0.625rem) var(--lf-space-4, 1rem);
+    transition: border-color var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease), box-shadow var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease);
+    width: 100%;
+  }
+}
+
+// Placeholder text colour.
+@mixin placeholder($class) {
+  .#{$class}::placeholder {
+    color: var(--lf-color-input-placeholder, #9ca3af);
+  }
+}
+
+// Focus-visible ring.
+@mixin focus($class) {
+  .#{$class}:focus-visible {
+    border-color: var(--lf-color-input-border-focus, #5b21b6);
+    outline: 2px solid var(--lf-color-focus-ring, #7c3aed);
+    outline-offset: 2px;
+  }
+}
+
+// Disabled visual state.
+@mixin disabled($class) {
+  .#{$class}:disabled {
+    background-color: var(--lf-color-input-disabled-bg, #f3f4f6);
+    color: var(--lf-color-input-disabled-text, #9ca3af);
+    cursor: not-allowed;
+  }
+}
+
+// Invalid / error border (driven by the host data-invalid attribute).
+@mixin invalid($class) {
+  :host([data-invalid]) .#{$class} {
+    border-color: var(--lf-color-error, #dc2626);
+  }
+}
+
+// Increased touch target on narrow viewports.
+@mixin mobile($class, $height: 3rem) {
+  @media (max-width: 480px) {
+    .#{$class} {
+      min-height: $height;
+    }
+  }
+}

@@ -135,7 +135,7 @@ export const CssParts: FieldStory = {
       error="Enter a valid email address."
       style="width: min(24rem, 100%)"
     ></lf-form-field>
-    <ul style="font-size:0.75rem; color:#6b7280; margin:0.75rem 0 0; padding-left:1.25rem; display:grid; gap:0.25rem">
+    <ul style="font-size:0.75rem; color:var(--lf-color-hint, #6b7280); margin:0.75rem 0 0; padding-left:1.25rem; display:grid; gap:0.25rem">
       <li><code style="color:#2563eb">::part(field)</code> — outer wrapper <code>&lt;div&gt;</code></li>
       <li><code style="color:#059669">::part(label)</code> — the <code>&lt;label&gt;</code> element</li>
       <li><code style="color:#7c3aed">::part(input)</code> — the native <code>&lt;input&gt;</code></li>

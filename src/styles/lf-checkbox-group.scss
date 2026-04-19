@@ -1,3 +1,6 @@
+@use './choice-control' as cc;
+@use './text-helpers' as th;
+
 :host {
   display: block;
   max-width: 100%;
@@ -17,16 +20,14 @@
   padding: 0;
 }
 
+// Legend uses float to break out of fieldset inline-size constraints.
 .legend {
-  color: var(--lf-color-label, #374151);
   float: left;
-  font-family: var(--lf-font-family-base, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-  font-size: var(--lf-font-size-sm, 0.875rem);
-  font-weight: var(--lf-font-weight-semibold, 600);
-  line-height: var(--lf-line-height-base, 1.2);
   padding: 0;
   width: 100%;
 }
+
+@include th.label-text('.legend');
 
 .legend + * {
   clear: left;
@@ -37,106 +38,16 @@
   gap: var(--lf-space-2, 0.5rem);
 }
 
-.option {
-  align-items: center;
-  cursor: pointer;
-  display: flex;
-  gap: var(--lf-space-2, 0.5rem);
-  user-select: none;
-}
+@include cc.option-layout('option');
+@include cc.option-disabled('option--disabled');
+@include cc.native-hidden('option__native');
+@include cc.checkbox-indicator('option__mark');
+@include cc.checkbox-checked('option__native', 'option__mark');
+@include cc.focus-ring('option__native', 'option__mark');
+@include cc.invalid-border('option__mark');
+@include cc.option-label('option__label');
+@include cc.checkbox-mobile('option__mark');
 
-.option--disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
+@include th.hint-text('.hint');
+@include th.error-text('.error');
 
-/* hide native checkbox */
-.option__native {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-}
-
-/* custom checkbox indicator */
-.option__mark {
-  align-items: center;
-  background-color: var(--lf-color-input-bg, #ffffff);
-  border: 2px solid var(--lf-color-input-border, #d1d5db);
-  border-radius: var(--lf-radius-sm, 0.25rem);
-  display: flex;
-  flex-shrink: 0;
-  height: var(--lf-checkbox-size, 1.125rem);
-  justify-content: center;
-  transition: border-color 150ms ease, background-color 150ms ease;
-  width: var(--lf-checkbox-size, 1.125rem);
-}
-
-/* checkmark icon drawn with CSS */
-.option__mark::after {
-  border-bottom: 2px solid var(--lf-color-on-primary, #ffffff);
-  border-right: 2px solid var(--lf-color-on-primary, #ffffff);
-  content: '';
-  display: block;
-  height: calc(var(--lf-checkbox-size, 1.125rem) * 0.55);
-  opacity: 0;
-  transform: rotate(45deg) scale(0) translate(-10%, -15%);
-  transition: opacity 150ms ease, transform 150ms ease;
-  width: calc(var(--lf-checkbox-size, 1.125rem) * 0.3);
-}
-
-/* checked state */
-.option__native:checked + .option__mark {
-  background-color: var(--lf-color-primary, #5b21b6);
-  border-color: var(--lf-color-primary, #5b21b6);
-}
-
-.option__native:checked + .option__mark::after {
-  opacity: 1;
-  transform: rotate(45deg) scale(1) translate(-10%, -15%);
-}
-
-/* focus state */
-.option__native:focus-visible + .option__mark {
-  border-color: var(--lf-color-input-border-focus, #5b21b6);
-  outline: 2px solid var(--lf-color-focus-ring, #7c3aed);
-  outline-offset: 2px;
-}
-
-/* error state */
-:host([data-invalid]) .option__mark {
-  border-color: var(--lf-color-error, #dc2626);
-}
-
-.option__label {
-  color: var(--lf-color-input-text, #111827);
-  font-family: var(--lf-font-family-base, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-  font-size: var(--lf-font-size-base, 1rem);
-  line-height: var(--lf-line-height-base, 1.2);
-}
-
-.hint {
-  color: var(--lf-color-hint, #6b7280);
-  display: block;
-  font-family: var(--lf-font-family-base, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-  font-size: var(--lf-font-size-sm, 0.875rem);
-  line-height: var(--lf-line-height-base, 1.2);
-}
-
-.error {
-  color: var(--lf-color-error, #dc2626);
-  display: block;
-  font-family: var(--lf-font-family-base, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-  font-size: var(--lf-font-size-sm, 0.875rem);
-  line-height: var(--lf-line-height-base, 1.2);
-}
-
-@media (max-width: 480px) {
-  .option__mark {
-    height: var(--lf-checkbox-size, 1.25rem);
-    width: var(--lf-checkbox-size, 1.25rem);
-  }
-}

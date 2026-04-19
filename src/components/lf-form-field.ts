@@ -27,7 +27,8 @@ let idCounter = 0
  * The component is form-associated: its `name` + `value` participate in
  * `<form>` submission and the native constraint-validation API.
  *
- * @fires lf-change - Fired when the value changes; `detail.value` holds the value.
+ * @fires lf-input - Fired on every keystroke (input/textarea modes); `detail.value` holds the current value.
+ * @fires lf-change - Fired when the value is committed (blur / Enter, or whenever the select value changes); `detail.value` holds the value.
  * @csspart field - Outer wrapper `<div>`.
  * @csspart label - The `<label>` element.
  * @csspart input - The `<input>` or `<textarea>` element (input/multiline mode only).
@@ -272,6 +273,19 @@ export class LfFormField extends LitElement implements LfAllFormProps {
   }
 
   // ─── Input/textarea mode handlers ──────────────────────────────────────────
+
+  private readonly onNativeInput = (e: Event): void => {
+    const input = e.target as HTMLInputElement | HTMLTextAreaElement
+    this.value = input.value
+    this._touched = true
+    this.dispatchEvent(
+      new CustomEvent('lf-input', {
+        bubbles: true,
+        composed: true,
+        detail: { value: this.value },
+      }),
+    )
+  }
 
   private readonly onNativeChange = (e: Event): void => {
     const input = e.target as HTMLInputElement | HTMLTextAreaElement
@@ -610,7 +624,7 @@ export class LfFormField extends LitElement implements LfAllFormProps {
                 rows=${this.rows}
                 aria-describedby=${ariaDescribedBy}
                 aria-invalid=${ariaInvalid}
-                @input=${this.onNativeChange}
+                @input=${this.onNativeInput}
                 @change=${this.onNativeChange}
                 @blur=${this.onNativeBlur}
               ></textarea>`
@@ -631,7 +645,7 @@ export class LfFormField extends LitElement implements LfAllFormProps {
                 inputmode=${this.inputMode}
                 aria-describedby=${ariaDescribedBy}
                 aria-invalid=${ariaInvalid}
-                @input=${this.onNativeChange}
+                @input=${this.onNativeInput}
                 @change=${this.onNativeChange}
                 @blur=${this.onNativeBlur}
               />`}

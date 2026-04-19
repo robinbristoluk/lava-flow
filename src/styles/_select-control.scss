@@ -18,7 +18,7 @@
     min-height: 2.75rem;
     padding: var(--lf-space-3, 0.625rem) var(--lf-space-4, 1rem);
     text-align: start;
-    transition: border-color 150ms ease, box-shadow 150ms ease;
+    transition: border-color var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease), box-shadow var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease);
     width: 100%;
 
     &:focus-visible {
@@ -73,7 +73,7 @@
     color: var(--lf-color-input-text, #111827);
     flex-shrink: 0;
     margin-inline-start: var(--lf-space-2, 0.5rem);
-    transition: transform 150ms ease;
+    transition: transform var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease);
   }
 }
 
@@ -82,7 +82,7 @@
     background-color: var(--lf-color-input-bg, #ffffff);
     border: 1px solid var(--lf-color-input-border, #d1d5db);
     border-radius: var(--lf-radius-md, 0.625rem);
-    box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+    box-shadow: var(--lf-shadow-popover, 0 4px 12px rgb(0 0 0 / 10%));
     display: none;
     inset-block-start: calc(100% + 0.25rem);
     inset-inline: 0;

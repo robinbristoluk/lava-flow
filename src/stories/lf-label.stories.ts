@@ -50,7 +50,7 @@ export const CssParts: Story = {
       }
     </style>
     <lf-label label="Email address" field-id="demo-label-parts"></lf-label>
-    <p style="font-size:0.75rem; color:#6b7280; margin:0.5rem 0 0">
+    <p style="font-size:0.75rem; color:var(--lf-color-hint, #6b7280); margin:0.5rem 0 0">
       <code style="color:#059669">::part(label)</code> — the native <code>&lt;label&gt;</code> element
     </p>
   `,

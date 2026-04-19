@@ -99,7 +99,7 @@ export const CssParts: CheckboxStory = {
       lf-checkbox::part(label)  { outline: 2px dashed #059669; outline-offset: 2px; }
     </style>
     <lf-checkbox label="Subscribe to newsletter" name="subscribe" checked></lf-checkbox>
-    <ul style="font-size:0.75rem; color:#6b7280; margin:0.75rem 0 0; padding-left:1.25rem; display:grid; gap:0.25rem">
+    <ul style="font-size:0.75rem; color:var(--lf-color-hint, #6b7280); margin:0.75rem 0 0; padding-left:1.25rem; display:grid; gap:0.25rem">
       <li><code style="color:#2563eb">::part(option)</code> — outer <code>&lt;label&gt;</code></li>
       <li><code style="color:#7c3aed">::part(mark)</code> — custom indicator</li>
       <li><code style="color:#059669">::part(label)</code> — label text</li>

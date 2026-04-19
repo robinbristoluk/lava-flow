@@ -65,8 +65,9 @@ type LfSelectPickedProps = Pick<
 export class LfSelect extends LitElement implements LfSelectPickedProps {
   static readonly formAssociated = true
 
-  protected override createRenderRoot() {
-    return this.attachShadow({ mode: 'open', delegatesFocus: true })
+  static override shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
   }
 
   private readonly internals: ElementInternals

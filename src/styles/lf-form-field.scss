@@ -23,7 +23,8 @@
   line-height: var(--lf-line-height-base, 1.2);
 }
 
-.input {
+.input,
+textarea.input {
   background-color: var(--lf-color-input-bg, #ffffff);
   border: 1px solid var(--lf-color-input-border, #d1d5db);
   border-radius: var(--lf-radius-md, 0.625rem);
@@ -36,6 +37,13 @@
   padding: var(--lf-space-3, 0.625rem) var(--lf-space-4, 1rem);
   transition: border-color 150ms ease, box-shadow 150ms ease;
   width: 100%;
+}
+
+textarea.input {
+  box-sizing: border-box;
+  line-height: var(--lf-line-height-base, 1.5);
+  min-height: 6rem;
+  resize: var(--lf-textarea-resize, vertical);
 }
 
 .input::placeholder {
@@ -97,6 +105,10 @@
 @media (max-width: 480px) {
   .input {
     min-height: 3rem;
+  }
+
+  textarea.input {
+    min-height: 7rem;
   }
 }
 

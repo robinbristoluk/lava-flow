@@ -27,13 +27,19 @@ const meta: Meta = {
       control: 'select',
       options: ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url'],
     },
+    resize: {
+      control: 'select',
+      options: ['none', 'horizontal', 'vertical', 'both'],
+    },
     placeholder: { control: 'text' },
     value: { control: 'text' },
     hint: { control: 'text' },
     error: { control: 'text' },
     autocomplete: { control: 'text' },
+    rows: { control: 'number' },
     minLength: { control: 'number' },
     maxLength: { control: 'number' },
+    multiline: { control: 'boolean' },
     required: { control: 'boolean' },
     disabled: { control: 'boolean' },
     readonly: { control: 'boolean' },
@@ -47,13 +53,16 @@ type FieldStory = StoryObj<{
   name: string
   type: 'text' | 'email' | 'tel' | 'url' | 'password' | 'search' | 'number'
   inputMode: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url'
+  resize: 'none' | 'horizontal' | 'vertical' | 'both'
   placeholder: string
   value: string
   hint: string
   error: string
   autocomplete: string
+  rows: number
   minLength: number
   maxLength: number
+  multiline: boolean
   required: boolean
   disabled: boolean
   readonly: boolean
@@ -233,6 +242,41 @@ export const WithinAForm: FieldStory = {
       ></lf-form-field>
       <button type="submit" style="padding:0.625rem 1rem; cursor:pointer">Submit</button>
     </form>
+  `,
+}
+
+export const Multiline: FieldStory = {
+  name: 'Multiline (textarea)',
+  args: {
+    ...Default.args,
+    label: 'Your message',
+    name: 'message',
+    type: 'text',
+    placeholder: 'Tell us what you think\u2026',
+    hint: 'Max 500 characters.',
+    rows: 5,
+    resize: 'vertical',
+    multiline: true,
+  },
+  render: (args) => html`
+    <lf-form-field
+      label=${args.label}
+      name=${args.name}
+      placeholder=${args.placeholder}
+      .value=${args.value ?? ''}
+      hint=${args.hint}
+      error=${args.error ?? ''}
+      autocomplete=${args.autocomplete ?? ''}
+      min-length=${args.minLength ?? 0}
+      max-length=${args.maxLength ?? 0}
+      rows=${args.rows ?? 5}
+      resize=${args.resize ?? 'vertical'}
+      ?multiline=${args.multiline}
+      ?required=${args.required}
+      ?disabled=${args.disabled}
+      ?readonly=${args.readonly}
+      style="width: min(24rem, 100%)"
+    ></lf-form-field>
   `,
 }
 

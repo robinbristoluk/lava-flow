@@ -7,15 +7,17 @@ import type {
   LfInputType,
   LfSelectOption,
   LfSelectOptionItem,
+  LfTextareaResize,
 } from '../types/form-field'
 
 let idCounter = 0
 
 /**
- * Composite form field component. Renders a label, control (input or select),
+ * Composite form field component. Renders a label, control (input, textarea, or select),
  * and optional hint and error message all inside a single shadow root,
  * providing a fully accessible field with proper `<label for>` association.
  *
+ * Set `multiline` to render a `<textarea>` instead of a single-line `<input>`.
  * Set `control="select"` and supply an `options` array to render a fully
  * stylable custom select control instead of a native `<input>`.
  *
@@ -28,7 +30,7 @@ let idCounter = 0
  * @fires lf-change - Fired when the value changes; `detail.value` holds the value.
  * @csspart field - Outer wrapper `<div>`.
  * @csspart label - The `<label>` element.
- * @csspart input - The `<input>` element (input mode only).
+ * @csspart input - The `<input>` or `<textarea>` element (input/multiline mode only).
  * @csspart trigger - The select trigger `<button>` (select mode only).
  * @csspart value - The selected-value `<span>` inside the trigger (select mode only).
  * @csspart icon - The chevron icon inside the trigger (select mode only).
@@ -62,6 +64,7 @@ let idCounter = 0
  * @cssprop [--lf-space-2=0.5rem] - Gap between field rows; icon margin.
  * @cssprop [--lf-space-3=0.625rem] - Input/trigger block padding.
  * @cssprop [--lf-space-4=1rem] - Input/trigger inline padding.
+ * @cssprop [--lf-textarea-resize=vertical] - Resize behaviour when `multiline` is set (none | horizontal | vertical | both).
  */
 @customElement('lf-form-field')
 export class LfFormField extends LitElement implements LfAllFormProps {
@@ -108,7 +111,7 @@ export class LfFormField extends LitElement implements LfAllFormProps {
   @property({ type: Boolean, reflect: true })
   readonly = false
 
-  /** browser autocomplete hint (input mode only) */
+  /** browser autocomplete hint (input/textarea mode only) */
   @property({ type: String })
   autocomplete = ''
 
@@ -120,11 +123,11 @@ export class LfFormField extends LitElement implements LfAllFormProps {
   @property({ type: String })
   error = ''
 
-  /** minimum number of characters (input mode only) */
+  /** minimum number of characters (input/textarea mode only) */
   @property({ type: Number, attribute: 'min-length' })
   minLength = 0
 
-  /** maximum number of characters (input mode only) */
+  /** maximum number of characters (input/textarea mode only) */
   @property({ type: Number, attribute: 'max-length' })
   maxLength = 0
 
@@ -139,9 +142,21 @@ export class LfFormField extends LitElement implements LfAllFormProps {
   @property({ type: String, attribute: 'field-id' })
   fieldId = ''
 
+  /** render a `<textarea>` instead of a single-line `<input>` */
+  @property({ type: Boolean, reflect: true })
+  multiline = false
+
+  /** number of visible text rows (only used when `multiline` is set) */
+  @property({ type: Number })
+  rows = 4
+
+  /** resize behaviour (only used when `multiline` is set) */
+  @property({ type: String })
+  resize: LfTextareaResize = 'vertical'
+
   /**
    * Which control to render inside the field wrapper.
-   * - `"input"` (default) renders a native `<input>` element.
+   * - `"input"` (default) renders a native `<input>` element (or `<textarea>` when `multiline` is set).
    * - `"select"` renders a fully stylable custom select control.
    */
   @property({ type: String })
@@ -203,6 +218,9 @@ export class LfFormField extends LitElement implements LfAllFormProps {
     ) {
       this.syncFormValue()
     }
+    if (changed.has('resize')) {
+      this.style.setProperty('--lf-textarea-resize', this.resize)
+    }
     this.updateInvalidState()
 
     if (changed.has('_selectOpen') && this._selectOpen) {
@@ -253,10 +271,10 @@ export class LfFormField extends LitElement implements LfAllFormProps {
       ?.scrollIntoView({ block: 'nearest' })
   }
 
-  // ─── Input mode handlers ────────────────────────────────────────────────────
+  // ─── Input/textarea mode handlers ──────────────────────────────────────────
 
   private readonly onNativeChange = (e: Event): void => {
-    const input = e.target as HTMLInputElement
+    const input = e.target as HTMLInputElement | HTMLTextAreaElement
     this.value = input.value
     this._touched = true
     this.dispatchEvent(
@@ -564,6 +582,10 @@ export class LfFormField extends LitElement implements LfAllFormProps {
   override render() {
     const errorId = `${this.inputId}-error`
     const hintId = `${this.inputId}-hint`
+    const ariaDescribedBy =
+      [this.hint ? hintId : '', this.error ? errorId : ''].filter(Boolean).join(' ') || nothing
+    const ariaInvalid =
+      this.error || (this._touched && !this.internals.validity.valid) ? 'true' : nothing
 
     return html`
       <div class="field" part="field">
@@ -571,8 +593,28 @@ export class LfFormField extends LitElement implements LfAllFormProps {
 
         ${this.control === 'select'
           ? this._renderSelectControl(hintId, errorId)
-          : html`
-              <input
+          : this.multiline
+            ? html`<textarea
+                class="input"
+                part="input"
+                id=${this.inputId}
+                name=${this.name || nothing}
+                .value=${this.value}
+                placeholder=${this.placeholder || nothing}
+                ?required=${this.required}
+                ?disabled=${this.disabled}
+                ?readonly=${this.readonly}
+                autocomplete=${this.autocomplete || nothing}
+                minlength=${this.minLength > 0 ? this.minLength : nothing}
+                maxlength=${this.maxLength > 0 ? this.maxLength : nothing}
+                rows=${this.rows}
+                aria-describedby=${ariaDescribedBy}
+                aria-invalid=${ariaInvalid}
+                @input=${this.onNativeChange}
+                @change=${this.onNativeChange}
+                @blur=${this.onNativeBlur}
+              ></textarea>`
+            : html`<input
                 class="input"
                 part="input"
                 id=${this.inputId}
@@ -587,17 +629,12 @@ export class LfFormField extends LitElement implements LfAllFormProps {
                 minlength=${this.minLength > 0 ? this.minLength : nothing}
                 maxlength=${this.maxLength > 0 ? this.maxLength : nothing}
                 inputmode=${this.inputMode}
-                aria-describedby=${[this.hint ? hintId : '', this.error ? errorId : '']
-                  .filter(Boolean)
-                  .join(' ') || nothing}
-                aria-invalid=${(this.error || (this._touched && !this.internals.validity.valid))
-                  ? 'true'
-                  : nothing}
+                aria-describedby=${ariaDescribedBy}
+                aria-invalid=${ariaInvalid}
                 @input=${this.onNativeChange}
                 @change=${this.onNativeChange}
                 @blur=${this.onNativeBlur}
-              />
-            `}
+              />`}
 
         ${this.hint
           ? html`<span class="hint" part="hint" id=${hintId} role="note">${this.hint}</span>`

@@ -1,0 +1,77 @@
+:host {
+  display: inline-flex;
+  max-width: 100%;
+  --lf-primary-bg: #5b21b6;
+  --lf-primary-bg-hover: #4c1d95;
+  --lf-primary-text: #ffffff;
+  --lf-secondary-bg: #ffffff;
+  --lf-secondary-bg-hover: #f5f3ff;
+  --lf-secondary-border: #5b21b6;
+  --lf-secondary-text: #4c1d95;
+  --lf-focus-ring: #7c3aed;
+}
+
+:host([full-width]) {
+  display: flex;
+  width: 100%;
+}
+
+.button {
+  align-items: center;
+  border: 2px solid transparent;
+  border-radius: 0.625rem;
+  cursor: pointer;
+  display: inline-flex;
+  font: 600 1rem/1.2 system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  gap: 0.5rem;
+  justify-content: center;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0.625rem 1rem;
+  touch-action: manipulation;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+  width: 100%;
+}
+
+:host(:not([full-width])) .button {
+  width: auto;
+}
+
+.button.primary {
+  background-color: var(--lf-primary-bg);
+  color: var(--lf-primary-text);
+}
+
+.button.primary:hover:enabled {
+  background-color: var(--lf-primary-bg-hover);
+}
+
+.button.secondary {
+  background-color: var(--lf-secondary-bg);
+  border-color: var(--lf-secondary-border);
+  color: var(--lf-secondary-text);
+}
+
+.button.secondary:hover:enabled {
+  background-color: var(--lf-secondary-bg-hover);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--lf-focus-ring);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.icon:empty {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .button {
+    min-height: 3rem;
+  }
+}

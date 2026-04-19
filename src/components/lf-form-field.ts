@@ -165,6 +165,14 @@ export class LfFormField extends LitElement implements LfAllFormProps {
   @state() private _touched = false
 
   // ─── Computed select helpers ────────────────────────────────────────────────
+  //
+  // NOTE: The select interaction logic is intentionally inlined here rather than
+  // composing the standalone <lf-select> element in the shadow DOM. Composing a
+  // second form-associated custom element inside this shadow root would prevent
+  // `aria-describedby` on the trigger button from referencing the hint/error
+  // <span>s rendered in this shadow root (cross-shadow-root ARIA ID references
+  // are not supported). Keeping everything in one shadow root preserves the full
+  // accessible description chain for the trigger button.
 
   private get _selectFlatOptions(): LfSelectOption[] {
     return this.options.flatMap((item) => ('group' in item ? item.options : [item]))

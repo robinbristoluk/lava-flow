@@ -26,11 +26,23 @@
     // Interactive states
     --lf-color-focus-ring: #7c3aed;
 
+    // Form / input
+    --lf-color-label: #374151;
+    --lf-color-hint: #6b7280;
+    --lf-color-error: #dc2626;
+    --lf-color-input-bg: #ffffff;
+    --lf-color-input-text: #111827;
+    --lf-color-input-border: #d1d5db;
+    --lf-color-input-border-focus: #5b21b6;
+    --lf-color-input-placeholder: #9ca3af;
+    --lf-color-input-disabled-bg: #f3f4f6;
+    --lf-color-input-disabled-text: #9ca3af;
+
     // ─── Spacing ──────────────────────────────────────────────────────────
 
-    --lf-space-2: 0.5rem;   // icon-label gap
-    --lf-space-3: 0.625rem; // button block padding
-    --lf-space-4: 1rem;     // button inline padding
+    --lf-space-2: 0.5rem;   // icon-label gap, hint/error gap
+    --lf-space-3: 0.625rem; // input block padding
+    --lf-space-4: 1rem;     // input inline padding
 
     // ─── Typography ───────────────────────────────────────────────────────
 
@@ -38,6 +50,7 @@
     --lf-font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     // stylelint-enable value-keyword-case
     --lf-font-size-base: 1rem;
+    --lf-font-size-sm: 0.875rem;
     --lf-font-weight-semibold: 600;
     --lf-line-height-base: 1.2;
 

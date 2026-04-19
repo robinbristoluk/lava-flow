@@ -271,7 +271,7 @@ const ROLE_META: Record<
   },
   warning: {
     label: 'Warning',
-    icon: '⚠',
+    icon: '⚠\uFE0E',
     message: 'Please review before continuing.',
     complementaryLabel: 'Red',
     complementaryProgressLabel: 'Critical',
@@ -279,7 +279,7 @@ const ROLE_META: Record<
   },
   info: {
     label: 'Info',
-    icon: 'ℹ',
+    icon: 'ℹ\uFE0E',
     message: 'New features are available in this release.',
     complementaryLabel: 'Violet',
     complementaryProgressLabel: 'Action needed',
@@ -287,7 +287,7 @@ const ROLE_META: Record<
   },
   error: {
     label: 'Error',
-    icon: '✕',
+    icon: '×',
     message: 'Something went wrong. Please try again.',
     complementaryLabel: 'Amber',
     complementaryProgressLabel: 'Warnings',
@@ -336,6 +336,7 @@ const variationCard = (role: (typeof COLOUR_ROLES)[number]) => {
             flex-shrink: 0;
             font-family: var(--lf-font-family-base, system-ui, sans-serif);
             font-size: 0.75rem;
+            font-variant-emoji: text;
             font-weight: 700;
             height: 1.375rem;
             justify-content: center;

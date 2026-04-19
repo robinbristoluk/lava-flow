@@ -58,6 +58,10 @@ export class LfCheckbox extends LitElement {
   @property({ type: String })
   value = 'on'
 
+  private get effectiveValue(): string {
+    return this.value || 'on'
+  }
+
   /** whether the checkbox is checked */
   @property({ type: Boolean, reflect: true })
   checked = false
@@ -88,7 +92,7 @@ export class LfCheckbox extends LitElement {
   }
 
   private syncFormValue(): void {
-    this.internals.setFormValue(this.checked ? this.value : null)
+    this.internals.setFormValue(this.checked ? this.effectiveValue : null)
     if (this.required && !this.checked) {
       this.internals.setValidity({ valueMissing: true }, 'Please check this box.')
     } else {
@@ -111,7 +115,7 @@ export class LfCheckbox extends LitElement {
       new CustomEvent('lf-change', {
         bubbles: true,
         composed: true,
-        detail: { checked: this.checked, value: this.checked ? this.value : null },
+        detail: { checked: this.checked, value: this.checked ? this.effectiveValue : null },
       }),
     )
   }
@@ -131,7 +135,7 @@ export class LfCheckbox extends LitElement {
           type="checkbox"
           id=${id}
           name=${this.name || nothing}
-          value=${this.value}
+          value=${this.effectiveValue}
           .checked=${this.checked}
           ?required=${this.required}
           ?disabled=${this.disabled}

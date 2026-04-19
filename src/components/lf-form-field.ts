@@ -1,14 +1,16 @@
 import { LitElement, html, nothing, unsafeCSS } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import styles from '../styles/lf-form-field.scss?inline'
-import type { LfAllFormProps, LfInputMode, LfInputType } from '../types/form-field'
+import type { LfAllFormProps, LfInputMode, LfInputType, LfTextareaResize } from '../types/form-field'
 
 let idCounter = 0
 
 /**
- * Composite form field component. Renders a label, input, and optional hint and error
+ * Composite form field component. Renders a label, input (or textarea), and optional hint and error
  * message all inside a single shadow root, providing a fully accessible field with
  * proper `<label for>` association.
+ *
+ * Set `multiline` to render a `<textarea>` instead of a single-line `<input>`.
  *
  * If `hint` is not set (empty string) the hint element is not rendered.
  * If `error` is not set (empty string) the error element is not rendered.
@@ -19,7 +21,7 @@ let idCounter = 0
  * @fires lf-change - Fired when the value changes; `detail.value` holds the value.
  * @csspart field - Outer wrapper `<div>`.
  * @csspart label - The `<label>` element.
- * @csspart input - The `<input>` element.
+ * @csspart input - The `<input>` or `<textarea>` element.
  * @csspart hint - The hint `<span>` (only present when `hint` is set).
  * @csspart error - The error `<span>` (only present when `error` is set).
  * @cssprop [--lf-color-label=#374151] - Label text colour.
@@ -41,6 +43,7 @@ let idCounter = 0
  * @cssprop [--lf-space-2=0.5rem] - Gap between field rows.
  * @cssprop [--lf-space-3=0.625rem] - Input block padding.
  * @cssprop [--lf-space-4=1rem] - Input inline padding.
+ * @cssprop [--lf-textarea-resize=vertical] - Resize behaviour when `multiline` is set (none | horizontal | vertical | both).
  */
 @customElement('lf-form-field')
 export class LfFormField extends LitElement implements LfAllFormProps {
@@ -118,6 +121,18 @@ export class LfFormField extends LitElement implements LfAllFormProps {
   @property({ type: String, attribute: 'field-id' })
   fieldId = ''
 
+  /** render a `<textarea>` instead of a single-line `<input>` */
+  @property({ type: Boolean, reflect: true })
+  multiline = false
+
+  /** number of visible text rows (only used when `multiline` is set) */
+  @property({ type: Number })
+  rows = 4
+
+  /** resize behaviour (only used when `multiline` is set) */
+  @property({ type: String })
+  resize: LfTextareaResize = 'vertical'
+
   /** whether the user has interacted with the field (blur or input event) */
   @state() private _touched = false
 
@@ -129,6 +144,9 @@ export class LfFormField extends LitElement implements LfAllFormProps {
       changed.has('maxLength')
     ) {
       this.syncFormValue()
+    }
+    if (changed.has('resize')) {
+      this.style.setProperty('--lf-textarea-resize', this.resize)
     }
     this.updateInvalidState()
   }
@@ -160,7 +178,7 @@ export class LfFormField extends LitElement implements LfAllFormProps {
   }
 
   private readonly onNativeChange = (e: Event): void => {
-    const input = e.target as HTMLInputElement
+    const input = e.target as HTMLInputElement | HTMLTextAreaElement
     this.value = input.value
     this._touched = true
     this.dispatchEvent(
@@ -179,35 +197,56 @@ export class LfFormField extends LitElement implements LfAllFormProps {
   override render() {
     const errorId = `${this.inputId}-error`
     const hintId = `${this.inputId}-hint`
+    const ariaDescribedBy =
+      [this.hint ? hintId : '', this.error ? errorId : ''].filter(Boolean).join(' ') || nothing
+    const ariaInvalid =
+      this.error || (this._touched && !this.internals.validity.valid) ? 'true' : nothing
 
     return html`
       <div class="field" part="field">
         <label class="label" part="label" for=${this.inputId}>${this.label}</label>
-        <input
-          class="input"
-          part="input"
-          id=${this.inputId}
-          name=${this.name || nothing}
-          type=${this.type}
-          .value=${this.value}
-          placeholder=${this.placeholder || nothing}
-          ?required=${this.required}
-          ?disabled=${this.disabled}
-          ?readonly=${this.readonly}
-          autocomplete=${this.autocomplete || nothing}
-          minlength=${this.minLength > 0 ? this.minLength : nothing}
-          maxlength=${this.maxLength > 0 ? this.maxLength : nothing}
-          inputmode=${this.inputMode}
-          aria-describedby=${[this.hint ? hintId : '', this.error ? errorId : '']
-            .filter(Boolean)
-            .join(' ') || nothing}
-          aria-invalid=${(this.error || (this._touched && !this.internals.validity.valid))
-            ? 'true'
-            : nothing}
-          @input=${this.onNativeChange}
-          @change=${this.onNativeChange}
-          @blur=${this.onNativeBlur}
-        />
+        ${this.multiline
+          ? html`<textarea
+              class="input"
+              part="input"
+              id=${this.inputId}
+              name=${this.name || nothing}
+              .value=${this.value}
+              placeholder=${this.placeholder || nothing}
+              ?required=${this.required}
+              ?disabled=${this.disabled}
+              ?readonly=${this.readonly}
+              autocomplete=${this.autocomplete || nothing}
+              minlength=${this.minLength > 0 ? this.minLength : nothing}
+              maxlength=${this.maxLength > 0 ? this.maxLength : nothing}
+              rows=${this.rows}
+              aria-describedby=${ariaDescribedBy}
+              aria-invalid=${ariaInvalid}
+              @input=${this.onNativeChange}
+              @change=${this.onNativeChange}
+              @blur=${this.onNativeBlur}
+            ></textarea>`
+          : html`<input
+              class="input"
+              part="input"
+              id=${this.inputId}
+              name=${this.name || nothing}
+              type=${this.type}
+              .value=${this.value}
+              placeholder=${this.placeholder || nothing}
+              ?required=${this.required}
+              ?disabled=${this.disabled}
+              ?readonly=${this.readonly}
+              autocomplete=${this.autocomplete || nothing}
+              minlength=${this.minLength > 0 ? this.minLength : nothing}
+              maxlength=${this.maxLength > 0 ? this.maxLength : nothing}
+              inputmode=${this.inputMode}
+              aria-describedby=${ariaDescribedBy}
+              aria-invalid=${ariaInvalid}
+              @input=${this.onNativeChange}
+              @change=${this.onNativeChange}
+              @blur=${this.onNativeBlur}
+            />`}
         ${this.hint
           ? html`<span class="hint" part="hint" id=${hintId} role="note">${this.hint}</span>`
           : nothing}

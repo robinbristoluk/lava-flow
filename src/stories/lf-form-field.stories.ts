@@ -13,9 +13,17 @@ const meta: Meta = {
       control: 'select',
       options: ['text', 'email', 'tel', 'url', 'password', 'search', 'number'],
     },
+    inputMode: {
+      control: 'select',
+      options: ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url'],
+    },
     placeholder: { control: 'text' },
+    value: { control: 'text' },
     hint: { control: 'text' },
     error: { control: 'text' },
+    autocomplete: { control: 'text' },
+    minLength: { control: 'number' },
+    maxLength: { control: 'number' },
     required: { control: 'boolean' },
     disabled: { control: 'boolean' },
     readonly: { control: 'boolean' },
@@ -28,9 +36,14 @@ type FieldStory = StoryObj<{
   label: string
   name: string
   type: 'text' | 'email' | 'tel' | 'url' | 'password' | 'search' | 'number'
+  inputMode: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url'
   placeholder: string
+  value: string
   hint: string
   error: string
+  autocomplete: string
+  minLength: number
+  maxLength: number
   required: boolean
   disabled: boolean
   readonly: boolean
@@ -54,8 +67,13 @@ export const Default: FieldStory = {
       name=${args.name}
       type=${args.type}
       placeholder=${args.placeholder}
+      .value=${args.value ?? ''}
       hint=${args.hint}
       error=${args.error}
+      autocomplete=${args.autocomplete ?? ''}
+      min-length=${args.minLength ?? 0}
+      max-length=${args.maxLength ?? 0}
+      inputmode=${args.inputMode ?? 'text'}
       ?required=${args.required}
       ?disabled=${args.disabled}
       ?readonly=${args.readonly}
@@ -79,8 +97,13 @@ export const WithError: FieldStory = {
       name=${args.name}
       type=${args.type}
       placeholder=${args.placeholder}
+      .value=${args.value ?? ''}
       hint=${args.hint}
       error=${args.error}
+      autocomplete=${args.autocomplete ?? ''}
+      min-length=${args.minLength ?? 0}
+      max-length=${args.maxLength ?? 0}
+      inputmode=${args.inputMode ?? 'text'}
       ?required=${args.required}
       ?disabled=${args.disabled}
       ?readonly=${args.readonly}
@@ -105,8 +128,13 @@ export const Disabled: FieldStory = {
       name=${args.name}
       type=${args.type}
       placeholder=${args.placeholder}
+      .value=${args.value ?? ''}
       hint=${args.hint}
       error=${args.error}
+      autocomplete=${args.autocomplete ?? ''}
+      min-length=${args.minLength ?? 0}
+      max-length=${args.maxLength ?? 0}
+      inputmode=${args.inputMode ?? 'text'}
       ?required=${args.required}
       ?disabled=${args.disabled}
       ?readonly=${args.readonly}
@@ -138,8 +166,13 @@ export const WithinAForm: FieldStory = {
         name=${args.name}
         type=${args.type}
         placeholder=${args.placeholder}
+        .value=${args.value ?? ''}
         hint=${args.hint}
         error=${args.error}
+        autocomplete=${args.autocomplete ?? ''}
+        min-length=${args.minLength ?? 0}
+        max-length=${args.maxLength ?? 0}
+        inputmode=${args.inputMode ?? 'text'}
         ?required=${args.required}
         ?disabled=${args.disabled}
         ?readonly=${args.readonly}

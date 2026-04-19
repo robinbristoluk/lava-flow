@@ -11,6 +11,11 @@ const meta: Meta = {
       control: 'select',
       options: ['text', 'email', 'tel', 'url', 'password', 'search', 'number'],
     },
+    inputMode: {
+      control: 'select',
+      options: ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url'],
+    },
+    name: { control: 'text' },
     placeholder: { control: 'text' },
     value: { control: 'text' },
     error: { control: 'text' },
@@ -27,6 +32,8 @@ export default meta
 
 type Story = StoryObj<{
   type: 'text' | 'email' | 'tel' | 'url' | 'password' | 'search' | 'number'
+  inputMode: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url'
+  name: string
   placeholder: string
   value: string
   error: string
@@ -51,9 +58,14 @@ export const Default: Story = {
   render: (args) => html`
     <lf-input
       type=${args.type}
+      name=${args.name ?? ''}
       placeholder=${args.placeholder}
       .value=${args.value}
       error=${args.error}
+      autocomplete=${args.autocomplete ?? ''}
+      min-length=${args.minLength ?? 0}
+      max-length=${args.maxLength ?? 0}
+      inputmode=${args.inputMode ?? 'text'}
       ?required=${args.required}
       ?disabled=${args.disabled}
       ?readonly=${args.readonly}
@@ -72,9 +84,14 @@ export const WithError: Story = {
   render: (args) => html`
     <lf-input
       type=${args.type}
+      name=${args.name ?? ''}
       placeholder=${args.placeholder}
       .value=${args.value}
       error=${args.error}
+      autocomplete=${args.autocomplete ?? ''}
+      min-length=${args.minLength ?? 0}
+      max-length=${args.maxLength ?? 0}
+      inputmode=${args.inputMode ?? 'text'}
       ?required=${args.required}
       ?disabled=${args.disabled}
       ?readonly=${args.readonly}
@@ -92,8 +109,14 @@ export const Disabled: Story = {
   render: (args) => html`
     <lf-input
       type=${args.type}
+      name=${args.name ?? ''}
       placeholder=${args.placeholder}
       .value=${args.value}
+      error=${args.error}
+      autocomplete=${args.autocomplete ?? ''}
+      min-length=${args.minLength ?? 0}
+      max-length=${args.maxLength ?? 0}
+      inputmode=${args.inputMode ?? 'text'}
       ?required=${args.required}
       ?disabled=${args.disabled}
       ?readonly=${args.readonly}
@@ -111,7 +134,13 @@ export const ReadOnly: Story = {
   render: (args) => html`
     <lf-input
       type=${args.type}
+      name=${args.name ?? ''}
       .value=${args.value}
+      error=${args.error}
+      autocomplete=${args.autocomplete ?? ''}
+      min-length=${args.minLength ?? 0}
+      max-length=${args.maxLength ?? 0}
+      inputmode=${args.inputMode ?? 'text'}
       ?required=${args.required}
       ?disabled=${args.disabled}
       ?readonly=${args.readonly}
@@ -131,11 +160,17 @@ export const Password: Story = {
   render: (args) => html`
     <lf-input
       type=${args.type}
+      name=${args.name ?? ''}
       placeholder=${args.placeholder}
+      .value=${args.value}
+      error=${args.error}
       autocomplete=${args.autocomplete ?? ''}
       min-length=${args.minLength ?? 0}
+      max-length=${args.maxLength ?? 0}
+      inputmode=${args.inputMode ?? 'text'}
       ?required=${args.required}
       ?disabled=${args.disabled}
+      ?readonly=${args.readonly}
       style="width: min(22rem, 100%)"
     ></lf-input>
   `,

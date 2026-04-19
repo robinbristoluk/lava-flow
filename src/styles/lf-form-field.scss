@@ -1,3 +1,5 @@
+@use './select-control' as sc;
+
 :host {
   display: block;
   max-width: 100%;
@@ -80,6 +82,26 @@ textarea.input {
   line-height: var(--lf-line-height-base, 1.2);
 }
 
+// ─── Select control ───────────────────────────────────────────────────────────
+// Styles for control="select" mode. Shared declarations come from the
+// _select-control.scss partial; only host-specific selectors are added here.
+
+.select-wrapper {
+  position: relative;
+}
+
+@include sc.trigger('select-trigger', 'select-icon');
+@include sc.invalid-trigger('select-trigger');
+@include sc.readonly-trigger(':host([readonly])', 'select-trigger');
+@include sc.value('select-value');
+@include sc.placeholder('select-placeholder');
+@include sc.icon('select-icon');
+@include sc.listbox('select-listbox', 'select-listbox--open');
+@include sc.option('select-option');
+@include sc.group('select-group');
+@include sc.group-label('select-group-label');
+@include sc.group-options('select-group-options');
+
 @media (max-width: 480px) {
   .input {
     min-height: 3rem;
@@ -89,3 +111,5 @@ textarea.input {
     min-height: 7rem;
   }
 }
+
+@include sc.mobile-trigger('select-trigger');

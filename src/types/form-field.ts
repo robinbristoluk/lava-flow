@@ -1,5 +1,15 @@
 export type LfTextareaResize = 'none' | 'horizontal' | 'vertical' | 'both'
 
+/** A single option in a radio-group or checkbox-group. */
+export interface LfOption {
+  /** The value submitted with the form. */
+  value: string
+  /** The visible label text for this option. */
+  label: string
+  /** When `true` this option cannot be interacted with. */
+  disabled?: boolean
+}
+
 export type LfInputType =
   | 'text'
   | 'email'

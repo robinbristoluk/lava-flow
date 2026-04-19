@@ -1,3 +1,5 @@
+export type LfTextareaResize = 'none' | 'horizontal' | 'vertical' | 'both'
+
 export type LfInputType =
   | 'text'
   | 'email'
@@ -54,4 +56,8 @@ export interface LfAllFormProps {
   maxLength: number
   /** virtual keyboard hint for mobile */
   inputMode: LfInputMode
+  /** number of visible text rows (textarea only) */
+  rows: number
+  /** resize behaviour (textarea only) */
+  resize: LfTextareaResize
 }

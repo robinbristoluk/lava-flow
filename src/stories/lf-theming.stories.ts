@@ -476,29 +476,81 @@ export const ColourVariations: Story = {
       description: {
         story:
           'Practical examples of the **accent**, **contrast**, and **complementary** sub-tokens ' +
-          'for each of the five roles. Each card shows:\n\n' +
+          'for each of the five roles, rendered side-by-side in **light** and **dark** mode. ' +
+          'Each card shows:\n\n' +
           '- **Alert banner** — `accent` background, base left-border, `contrast` body text, base icon chip\n' +
           '- **Chips** — base fill, accent tinted outline\n' +
           '- **Two-tone progress bar** — role base fill on the left, complementary fill on the right, ' +
           'illustrating how the paired hue works as a visual counterpart (e.g. primary/amber, success/cyan)\n' +
           '- **Paired badge row** — role base badge alongside a complementary badge, as used for ' +
           'category + status labelling\n\n' +
-          'Toggle dark mode via `data-theme` on `<html>` to see all tokens adapt automatically.',
+          'Both panels are always visible regardless of your OS colour scheme — ' +
+          '`data-theme="light"` and `data-theme="dark"` are applied directly to each panel.',
       },
     },
   },
   render: () => html`
     <div
       style="
-        background: var(--lf-color-surface, #ffffff);
-        border-radius: var(--lf-radius-md, 0.625rem);
         display: grid;
         gap: 1.5rem;
-        padding: 1.5rem;
-        width: min(36rem, 100%);
+        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+        width: min(76rem, 100%);
       "
     >
-      ${COLOUR_ROLES.map(variationCard)}
+      <!-- Light panel -->
+      <div>
+        <p
+          style="
+            color: #374151;
+            font-family: system-ui, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin: 0 0 0.5rem;
+            text-transform: uppercase;
+          "
+        >☀ Light</p>
+        <div
+          data-theme="light"
+          style="
+            background: var(--lf-color-surface, #ffffff);
+            border-radius: var(--lf-radius-md, 0.625rem);
+            display: grid;
+            gap: 1.5rem;
+            padding: 1.5rem;
+          "
+        >
+          ${COLOUR_ROLES.map(variationCard)}
+        </div>
+      </div>
+
+      <!-- Dark panel -->
+      <div>
+        <p
+          style="
+            color: #374151;
+            font-family: system-ui, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin: 0 0 0.5rem;
+            text-transform: uppercase;
+          "
+        >☾ Dark</p>
+        <div
+          data-theme="dark"
+          style="
+            background: #111827;
+            border-radius: var(--lf-radius-md, 0.625rem);
+            display: grid;
+            gap: 1.5rem;
+            padding: 1.5rem;
+          "
+        >
+          ${COLOUR_ROLES.map(variationCard)}
+        </div>
+      </div>
     </div>
   `,
 }

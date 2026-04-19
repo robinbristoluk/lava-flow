@@ -10,7 +10,7 @@
  *  5. **Compact** — reduced spacing and smaller type.
  *  6. **High contrast** — accessible high-contrast colours.
  */
-import { html } from 'lit'
+import { html, type TemplateResult } from 'lit'
 import type { Meta, StoryObj } from '@storybook/web-components-vite'
 
 import '../components/lf-form-field'
@@ -246,7 +246,7 @@ const ROLE_META: Record<
   (typeof COLOUR_ROLES)[number],
   {
     label: string
-    icon: string
+    icon: TemplateResult
     message: string
     complementaryLabel: string
     complementaryProgressLabel: string
@@ -255,7 +255,7 @@ const ROLE_META: Record<
 > = {
   primary: {
     label: 'Primary',
-    icon: '*',
+    icon: html`<svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M8 1 9.85 4.8 14 5.5l-3 2.93.71 4.12L8 10.5l-3.71 2.05L5 8.43 2 5.5l4.15-.7z"/></svg>`,
     message: 'This action uses your primary brand colour.',
     complementaryLabel: 'Amber',
     complementaryProgressLabel: 'Milestone',
@@ -263,7 +263,7 @@ const ROLE_META: Record<
   },
   success: {
     label: 'Success',
-    icon: 'v',
+    icon: html`<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2,8 6.5,12.5 14,4"/></svg>`,
     message: 'Your changes have been saved successfully.',
     complementaryLabel: 'Cyan',
     complementaryProgressLabel: 'In review',
@@ -271,7 +271,7 @@ const ROLE_META: Record<
   },
   warning: {
     label: 'Warning',
-    icon: '!',
+    icon: html`<svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true"><rect x="7" y="2" width="2" height="8" rx="1"/><circle cx="8" cy="13" r="1.25"/></svg>`,
     message: 'Please review before continuing.',
     complementaryLabel: 'Red',
     complementaryProgressLabel: 'Critical',
@@ -279,7 +279,7 @@ const ROLE_META: Record<
   },
   info: {
     label: 'Info',
-    icon: 'i',
+    icon: html`<svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor" aria-hidden="true"><circle cx="8" cy="3.5" r="1.25"/><rect x="7" y="7" width="2" height="7" rx="1"/></svg>`,
     message: 'New features are available in this release.',
     complementaryLabel: 'Violet',
     complementaryProgressLabel: 'Action needed',
@@ -287,7 +287,7 @@ const ROLE_META: Record<
   },
   error: {
     label: 'Error',
-    icon: '×',
+    icon: html`<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></svg>`,
     message: 'Something went wrong. Please try again.',
     complementaryLabel: 'Amber',
     complementaryProgressLabel: 'Warnings',

@@ -1050,6 +1050,41 @@ describe('lf-checkbox', () => {
     el.remove()
   })
 
+  it('uses custom value in form data when checked', async () => {
+    const el = new LfCheckbox()
+    el.name = 'agree'
+    el.value = 'agreed'
+    document.body.append(el)
+    await el.updateComplete
+
+    const spy = vi.spyOn((el as unknown as { internals: ElementInternals }).internals, 'setFormValue')
+
+    el.checked = true
+    await el.updateComplete
+
+    expect(spy).toHaveBeenCalledWith('agreed')
+
+    el.remove()
+  })
+
+  it('submits null (field absent) when unchecked', async () => {
+    const el = new LfCheckbox()
+    el.name = 'agree'
+    el.value = 'agreed'
+    el.checked = true
+    document.body.append(el)
+    await el.updateComplete
+
+    const spy = vi.spyOn((el as unknown as { internals: ElementInternals }).internals, 'setFormValue')
+
+    el.checked = false
+    await el.updateComplete
+
+    expect(spy).toHaveBeenCalledWith(null)
+
+    el.remove()
+  })
+
   it('renders label text', async () => {
     const el = new LfCheckbox()
     el.label = 'Subscribe to newsletter'

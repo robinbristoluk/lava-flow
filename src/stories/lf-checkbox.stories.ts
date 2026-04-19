@@ -114,12 +114,18 @@ export const WithinAForm: CheckboxStory = {
       style="display:grid; gap:1rem; width:min(24rem, 100%)"
       @submit=${(e: Event) => {
         e.preventDefault()
-        alert('Submitted: ' + JSON.stringify(Object.fromEntries(new FormData(e.target as HTMLFormElement))))
+        const data = new FormData(e.target as HTMLFormElement)
+        const result: Record<string, string | null> = {}
+        for (const key of new Set(data.keys())) {
+          result[key] = data.get(key) as string | null
+        }
+        alert('Submitted: ' + JSON.stringify(result))
       }}
     >
       <lf-checkbox
         label="I agree to the terms and conditions"
         name="agree"
+        value="agreed"
         required
       ></lf-checkbox>
       <button type="submit" style="padding:0.625rem 1rem; cursor:pointer">Submit</button>

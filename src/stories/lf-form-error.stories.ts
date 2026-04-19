@@ -24,6 +24,22 @@ export const Default: Story = {
   render: (args) => html`<lf-form-error error=${args.error}></lf-form-error>`,
 }
 
+export const CssParts: Story = {
+  name: 'CSS parts',
+  render: () => html`
+    <style>
+      lf-form-error::part(error) {
+        outline: 2px dashed #dc2626;
+        outline-offset: 2px;
+      }
+    </style>
+    <lf-form-error error="This field is required."></lf-form-error>
+    <p style="font-size:0.75rem; color:#6b7280; margin:0.5rem 0 0">
+      <code style="color:#dc2626">::part(error)</code> — the error text container
+    </p>
+  `,
+}
+
 export const ValidationError: Story = {
   name: 'Validation error',
   args: {

@@ -82,6 +82,50 @@ export const Default: FieldStory = {
   `,
 }
 
+export const CssParts: FieldStory = {
+  name: 'CSS parts',
+  render: () => html`
+    <style>
+      lf-form-field::part(field) {
+        outline: 2px dashed #2563eb;
+        outline-offset: 4px;
+      }
+      lf-form-field::part(label) {
+        outline: 2px dashed #059669;
+        outline-offset: 2px;
+      }
+      lf-form-field::part(input) {
+        outline: 2px dashed #7c3aed;
+        outline-offset: 2px;
+      }
+      lf-form-field::part(hint) {
+        outline: 2px dashed #d97706;
+        outline-offset: 2px;
+      }
+      lf-form-field::part(error) {
+        outline: 2px dashed #dc2626;
+        outline-offset: 2px;
+      }
+    </style>
+    <lf-form-field
+      label="Email address"
+      name="email"
+      type="email"
+      placeholder="you@example.com"
+      hint="We'll never share your email."
+      error="Enter a valid email address."
+      style="width: min(24rem, 100%)"
+    ></lf-form-field>
+    <ul style="font-size:0.75rem; color:#6b7280; margin:0.75rem 0 0; padding-left:1.25rem; display:grid; gap:0.25rem">
+      <li><code style="color:#2563eb">::part(field)</code> — outer wrapper <code>&lt;div&gt;</code></li>
+      <li><code style="color:#059669">::part(label)</code> — the <code>&lt;label&gt;</code> element</li>
+      <li><code style="color:#7c3aed">::part(input)</code> — the native <code>&lt;input&gt;</code></li>
+      <li><code style="color:#d97706">::part(hint)</code> — hint text (present when <code>hint</code> is set)</li>
+      <li><code style="color:#dc2626">::part(error)</code> — error text (present when <code>error</code> is set)</li>
+    </ul>
+  `,
+}
+
 export const WithError: FieldStory = {
   args: {
     ...Default.args,

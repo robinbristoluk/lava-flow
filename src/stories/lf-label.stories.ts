@@ -40,6 +40,22 @@ export const Required: Story = {
   `,
 }
 
+export const CssParts: Story = {
+  name: 'CSS parts',
+  render: () => html`
+    <style>
+      lf-label::part(label) {
+        outline: 2px dashed #059669;
+        outline-offset: 2px;
+      }
+    </style>
+    <lf-label label="Email address" field-id="demo-label-parts"></lf-label>
+    <p style="font-size:0.75rem; color:#6b7280; margin:0.5rem 0 0">
+      <code style="color:#059669">::part(label)</code> — the native <code>&lt;label&gt;</code> element
+    </p>
+  `,
+}
+
 export const LinkedToInput: Story = {
   name: 'Linked to an input',
   args: {

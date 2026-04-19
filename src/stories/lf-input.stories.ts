@@ -74,6 +74,22 @@ export const Default: Story = {
   `,
 }
 
+export const CssParts: Story = {
+  name: 'CSS parts',
+  render: () => html`
+    <style>
+      lf-input::part(input) {
+        outline: 2px dashed #7c3aed;
+        outline-offset: 2px;
+      }
+    </style>
+    <lf-input placeholder="Enter text…" style="width: min(22rem, 100%)"></lf-input>
+    <p style="font-size:0.75rem; color:#6b7280; margin:0.5rem 0 0">
+      <code style="color:#7c3aed">::part(input)</code> — the native <code>&lt;input&gt;</code> element
+    </p>
+  `,
+}
+
 export const WithError: Story = {
   args: {
     ...Default.args,

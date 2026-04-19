@@ -6,8 +6,9 @@
  *  1. **Light** — the default light palette (violet primary, green success, amber warning, blue info).
  *  2. **Dark** — dark palette, applied via `data-theme="dark"` (same tokens the system dark mode uses).
  *  3. **Side by side** — light and dark rendered next to each other.
- *  4. **Compact** — reduced spacing and smaller type.
- *  5. **High contrast** — accessible high-contrast colours.
+ *  4. **Colour Variations** — practical examples of accent, contrast, and complementary tokens per role.
+ *  5. **Compact** — reduced spacing and smaller type.
+ *  6. **High contrast** — accessible high-contrast colours.
  */
 import { html } from 'lit'
 import type { Meta, StoryObj } from '@storybook/web-components-vite'
@@ -25,9 +26,14 @@ const meta: Meta = {
           'lava-flow components automatically adapt to the OS colour scheme via ' +
           '`prefers-color-scheme`. You can also force a mode by placing `data-theme="dark"` ' +
           'or `data-theme="light"` on any ancestor element (including `<html>`).\n\n' +
-          'Beyond dark/light, the token system now includes three semantic colour families — ' +
-          '**success** (green), **warning** (amber), and **info** (blue) — which are automatically ' +
-          'adjusted for dark surfaces.',
+          'Beyond dark/light, the token system includes five semantic colour roles — ' +
+          '**primary** (violet), **success** (green), **warning** (amber), **info** (blue), ' +
+          'and **error** (red). Each role exposes four sub-tokens:\n\n' +
+          '- `--lf-color-{role}` — base colour\n' +
+          '- `--lf-color-{role}-accent` — light tint for alert/badge backgrounds\n' +
+          '- `--lf-color-{role}-contrast` — deep shade for text/borders on light surfaces\n' +
+          '- `--lf-color-{role}-complementary` — harmoniously paired hue from a different family\n\n' +
+          'All tokens automatically adapt for dark mode.',
       },
     },
   },
@@ -230,6 +236,190 @@ export const SideBySide: Story = {
         ${demoForm()}
         ${submitButton()}
       </div>
+    </div>
+  `,
+}
+
+// ─── Colour Variations ────────────────────────────────────────────────────────
+
+const ROLE_META: Record<
+  (typeof COLOUR_ROLES)[number],
+  { label: string; icon: string; message: string }
+> = {
+  primary: {
+    label: 'Primary',
+    icon: '★',
+    message: 'This action uses your primary brand colour.',
+  },
+  success: {
+    label: 'Success',
+    icon: '✓',
+    message: 'Your changes have been saved successfully.',
+  },
+  warning: {
+    label: 'Warning',
+    icon: '⚠',
+    message: 'Please review before continuing.',
+  },
+  info: {
+    label: 'Info',
+    icon: 'ℹ',
+    message: 'New features are available in this release.',
+  },
+  error: {
+    label: 'Error',
+    icon: '✕',
+    message: 'Something went wrong. Please try again.',
+  },
+}
+
+const variationCard = (role: (typeof COLOUR_ROLES)[number]) => {
+  const meta = ROLE_META[role]
+  return html`
+    <div>
+      <!-- Role heading -->
+      <p
+        style="
+          color: var(--lf-color-label);
+          font-family: var(--lf-font-family-base, system-ui, sans-serif);
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+          margin: 0 0 0.5rem;
+          text-transform: uppercase;
+        "
+      >${meta.label}</p>
+
+      <!-- Alert banner: accent bg · base left-border · contrast body text · base icon chip -->
+      <div
+        style="
+          align-items: flex-start;
+          background: var(--lf-color-${role}-accent);
+          border: 1px solid var(--lf-color-${role});
+          border-left: 4px solid var(--lf-color-${role});
+          border-radius: var(--lf-radius-md, 0.625rem);
+          display: flex;
+          gap: 0.625rem;
+          margin-bottom: 0.5rem;
+          padding: 0.75rem 1rem;
+        "
+      >
+        <span
+          style="
+            align-items: center;
+            background: var(--lf-color-${role});
+            border-radius: 50%;
+            color: var(--lf-color-on-${role});
+            display: flex;
+            flex-shrink: 0;
+            font-family: var(--lf-font-family-base, system-ui, sans-serif);
+            font-size: 0.75rem;
+            font-weight: 700;
+            height: 1.375rem;
+            justify-content: center;
+            width: 1.375rem;
+          "
+        >${meta.icon}</span>
+        <p
+          style="
+            color: var(--lf-color-${role}-contrast);
+            font-family: var(--lf-font-family-base, system-ui, sans-serif);
+            font-size: 0.875rem;
+            line-height: 1.4;
+            margin: 0;
+          "
+        >${meta.message}</p>
+      </div>
+
+      <!-- Chip row: base · accent · complementary -->
+      <div style="display:flex; gap:0.375rem; flex-wrap:wrap; margin-bottom:0.5rem">
+        <span
+          style="
+            background: var(--lf-color-${role});
+            border-radius: 999px;
+            color: var(--lf-color-on-${role});
+            font-family: var(--lf-font-family-base, system-ui, sans-serif);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.625rem;
+          "
+        >Base</span>
+        <span
+          style="
+            background: var(--lf-color-${role}-accent);
+            border: 1px solid var(--lf-color-${role});
+            border-radius: 999px;
+            color: var(--lf-color-${role}-contrast);
+            font-family: var(--lf-font-family-base, system-ui, sans-serif);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.625rem;
+          "
+        >Accent</span>
+        <span
+          style="
+            background: var(--lf-color-${role}-complementary);
+            border-radius: 999px;
+            color: var(--lf-color-on-primary);
+            font-family: var(--lf-font-family-base, system-ui, sans-serif);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.625rem;
+          "
+        >Complementary</span>
+      </div>
+
+      <!-- Inline text: contrast colour for a callout link -->
+      <p
+        style="
+          color: var(--lf-color-hint, #6b7280);
+          font-family: var(--lf-font-family-base, system-ui, sans-serif);
+          font-size: 0.75rem;
+          margin: 0;
+        "
+      >
+        Contrast text:
+        <a
+          href="#"
+          style="
+            color: var(--lf-color-${role}-contrast);
+            font-weight: 600;
+            text-decoration: underline;
+          "
+          onclick="return false"
+        >${meta.label} detail →</a>
+      </p>
+    </div>
+  `
+}
+
+export const ColourVariations: Story = {
+  name: 'Colour Variations',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Practical examples of the **accent**, **contrast**, and **complementary** sub-tokens ' +
+          'for each of the five roles. Each card shows:\n\n' +
+          '- **Alert banner** — `accent` background, base left-border, `contrast` body text, base icon chip\n' +
+          '- **Chips** — base fill, accent tinted outline, complementary fill\n' +
+          '- **Inline link** — `contrast` colour for text on a light surface\n\n' +
+          'Toggle dark mode via `data-theme` on `<html>` to see all tokens adapt automatically.',
+      },
+    },
+  },
+  render: () => html`
+    <div
+      style="
+        background: var(--lf-color-surface, #ffffff);
+        border-radius: var(--lf-radius-md, 0.625rem);
+        display: grid;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        width: min(36rem, 100%);
+      "
+    >
+      ${COLOUR_ROLES.map(variationCard)}
     </div>
   `,
 }

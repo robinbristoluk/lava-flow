@@ -598,7 +598,7 @@ describe('lf-form-field', () => {
     el.remove()
   })
 
-  it('fires lf-input on every keystroke', async () => {
+  it('fires lf-input when the native input event is dispatched', async () => {
     const el = new LfFormField()
     el.label = 'Name'
     el.name = 'name'
@@ -1199,7 +1199,7 @@ describe('lf-form-field multiline', () => {
     el.remove()
   })
 
-  it('fires lf-input on every keystroke (multiline)', async () => {
+  it('fires lf-input when the native input event is dispatched (multiline)', async () => {
     const el = new LfFormField()
     el.label = 'Message'
     el.multiline = true

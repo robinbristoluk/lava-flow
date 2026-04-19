@@ -7,23 +7,60 @@
 //
 // Tokens are declared inside @layer lf-tokens, giving consumer rules
 // declared outside any layer automatic precedence for overrides.
+//
+// ─── Dark / light mode ─────────────────────────────────────────────────────────
+//
+// lava-flow automatically adapts to the OS colour scheme via
+// `@media (prefers-color-scheme: dark)`. You can also force a mode with the
+// `data-theme` attribute on any ancestor element (or <html>):
+//
+//   <html data-theme="dark">   <!-- force dark regardless of OS setting  -->
+//   <html data-theme="light">  <!-- force light regardless of OS setting -->
+//
+// ─── Extra colour families ─────────────────────────────────────────────────────
+//
+// In addition to the primary (violet) palette, three semantic colour roles are
+// provided out of the box and are overridden for dark mode automatically:
+//
+//   success  – affirming / valid states  (green)
+//   warning  – cautionary states         (amber)
+//   info     – informational states      (blue)
 
 @layer lf-tokens {
-  :root {
-    // ─── Colour ───────────────────────────────────────────────────────────
+  // ─── Shared light palette mixin ──────────────────────────────────────────
 
-    // Primary action
+  @mixin light-colours {
+    // Primary violet
     --lf-color-primary: #5b21b6;
     --lf-color-primary-hover: #4c1d95;
     --lf-color-on-primary: #ffffff;
 
-    // Secondary action
+    // Secondary
     --lf-color-secondary: #ffffff;
     --lf-color-secondary-hover: #f5f3ff;
     --lf-color-secondary-border: #5b21b6;
     --lf-color-on-secondary: #4c1d95;
 
-    // Interactive states
+    // Success (green)
+    --lf-color-success: #16a34a;
+    --lf-color-success-hover: #15803d;
+    --lf-color-on-success: #ffffff;
+
+    // Warning (amber)
+    --lf-color-warning: #d97706;
+    --lf-color-warning-hover: #b45309;
+    --lf-color-on-warning: #ffffff;
+
+    // Info (blue)
+    --lf-color-info: #2563eb;
+    --lf-color-info-hover: #1d4ed8;
+    --lf-color-on-info: #ffffff;
+
+    // Surface
+    --lf-color-surface: #ffffff;
+    --lf-color-surface-alt: #f9fafb;
+
+    // Interactive
     --lf-color-focus-ring: #7c3aed;
 
     // Form / input
@@ -38,13 +75,22 @@
     --lf-color-input-disabled-bg: #f3f4f6;
     --lf-color-input-disabled-text: #9ca3af;
 
-    // ─── Spacing ──────────────────────────────────────────────────────────
+    // Shadow
+    --lf-shadow-popover: 0 4px 12px rgb(0 0 0 / 10%);
+  }
+
+  // ─── Light mode defaults (and fallback for all modes) ─────────────────────
+
+  :root {
+    @include light-colours;
+
+    // ─── Spacing ────────────────────────────────────────────────────────
 
     --lf-space-2: 0.5rem;   // icon-label gap, hint/error gap
     --lf-space-3: 0.625rem; // input block padding
     --lf-space-4: 1rem;     // input inline padding
 
-    // ─── Typography ───────────────────────────────────────────────────────
+    // ─── Typography ─────────────────────────────────────────────────────
 
     // stylelint-disable value-keyword-case
     --lf-font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -54,23 +100,94 @@
     --lf-font-weight-semibold: 600;
     --lf-line-height-base: 1.2;
 
-    // ─── Radius ───────────────────────────────────────────────────────────
+    // ─── Radius ─────────────────────────────────────────────────────────
 
     --lf-radius-sm: 0.25rem;
     --lf-radius-md: 0.625rem;
 
-    // ─── Motion ───────────────────────────────────────────────────────────
+    // ─── Motion ─────────────────────────────────────────────────────────
 
     --lf-transition-duration: 150ms;
     --lf-transition-easing: ease;
 
-    // ─── Shadow ───────────────────────────────────────────────────────────
-
-    --lf-shadow-popover: 0 4px 12px rgb(0 0 0 / 10%);
-
-    // ─── Component sizes ──────────────────────────────────────────────────
+    // ─── Component sizes ────────────────────────────────────────────────
 
     --lf-checkbox-size: 1.125rem;
     --lf-radio-size: 1.125rem;
   }
+
+  // ─── Dark mode ─────────────────────────────────────────────────────────────
+  //
+  // Applied automatically when prefers-color-scheme is dark (unless the consumer
+  // has set data-theme="light" to lock the light palette).
+  // Also applied when data-theme="dark" is set on any ancestor element.
+
+  @mixin dark-colours {
+    // Primary violet — lighter for visibility on dark surfaces
+    --lf-color-primary: #7c3aed;
+    --lf-color-primary-hover: #6d28d9;
+    --lf-color-on-primary: #ffffff;
+
+    // Secondary
+    --lf-color-secondary: #1e1b4b;
+    --lf-color-secondary-hover: #2e2a5e;
+    --lf-color-secondary-border: #7c3aed;
+    --lf-color-on-secondary: #c4b5fd;
+
+    // Success — lighter green for dark surfaces
+    --lf-color-success: #4ade80;
+    --lf-color-success-hover: #22c55e;
+    --lf-color-on-success: #052e16;
+
+    // Warning — lighter amber
+    --lf-color-warning: #fbbf24;
+    --lf-color-warning-hover: #f59e0b;
+    --lf-color-on-warning: #431407;
+
+    // Info — lighter blue
+    --lf-color-info: #60a5fa;
+    --lf-color-info-hover: #3b82f6;
+    --lf-color-on-info: #172554;
+
+    // Surface
+    --lf-color-surface: #111827;
+    --lf-color-surface-alt: #1f2937;
+
+    // Interactive
+    --lf-color-focus-ring: #a78bfa;
+
+    // Form / input
+    --lf-color-label: #e5e7eb;
+    --lf-color-hint: #9ca3af;
+    --lf-color-error: #f87171;
+    --lf-color-input-bg: #1f2937;
+    --lf-color-input-text: #f9fafb;
+    --lf-color-input-border: #374151;
+    --lf-color-input-border-focus: #7c3aed;
+    --lf-color-input-placeholder: #6b7280;
+    --lf-color-input-disabled-bg: #111827;
+    --lf-color-input-disabled-text: #4b5563;
+
+    // Shadow — more pronounced on dark surfaces
+    --lf-shadow-popover: 0 4px 16px rgb(0 0 0 / 40%);
+  }
+
+  // System dark mode — applied when OS is dark, unless data-theme="light" locks it.
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      @include dark-colours;
+    }
+  }
+
+  // Explicit dark — forces dark mode regardless of OS setting.
+  [data-theme="dark"] {
+    @include dark-colours;
+  }
+
+  // Explicit light — forces light mode regardless of OS setting (use on :root or a wrapper).
+  // Only colour tokens (and shadow) are reset; spacing/typography/radius/motion do not change.
+  [data-theme="light"] {
+    @include light-colours;
+  }
 }
+

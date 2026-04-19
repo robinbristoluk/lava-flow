@@ -2,10 +2,12 @@
  * Token override stories — demonstrating how all lf-* components respond
  * when the design token set is swapped out via CSS custom properties.
  *
- * Three presets are shown:
- *  1. **Dark** — a dark-surface colour palette.
- *  2. **Compact** — reduced spacing and smaller type.
- *  3. **High-contrast** — accessible colours with thicker borders and ring.
+ * Stories:
+ *  1. **Light** — the default light palette (violet primary, green success, amber warning, blue info).
+ *  2. **Dark** — dark palette, applied via `data-theme="dark"` (same tokens the system dark mode uses).
+ *  3. **Side by side** — light and dark rendered next to each other.
+ *  4. **Compact** — reduced spacing and smaller type.
+ *  5. **High contrast** — accessible high-contrast colours.
  */
 import { html } from 'lit'
 import type { Meta, StoryObj } from '@storybook/web-components-vite'
@@ -20,9 +22,12 @@ const meta: Meta = {
     docs: {
       description: {
         component:
-          'These stories show how lava-flow components respond to token overrides. ' +
-          'Override any `--lf-*` custom property on a parent element (or `:root`) to ' +
-          'retheme an entire section or the whole page.',
+          'lava-flow components automatically adapt to the OS colour scheme via ' +
+          '`prefers-color-scheme`. You can also force a mode by placing `data-theme="dark"` ' +
+          'or `data-theme="light"` on any ancestor element (including `<html>`).\n\n' +
+          'Beyond dark/light, the token system now includes three semantic colour families — ' +
+          '**success** (green), **warning** (amber), and **info** (blue) — which are automatically ' +
+          'adjusted for dark surfaces.',
       },
     },
   },
@@ -31,32 +36,91 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj
 
-// ─── Dark theme ───────────────────────────────────────────────────────────────
+// ─── Shared form for demos ────────────────────────────────────────────────────
 
-export const Dark: Story = {
-  name: 'Dark theme',
+const demoForm = () => html`
+  <lf-form-field
+    label="Email address"
+    name="email"
+    type="email"
+    placeholder="you@example.com"
+    hint="We'll never share your email."
+  ></lf-form-field>
+
+  <lf-form-field
+    label="Message"
+    name="message"
+    multiline
+    placeholder="Write your message…"
+  ></lf-form-field>
+
+  <lf-radio-group
+    label="Preferred contact"
+    name="contact"
+    .options=${[
+      { value: 'email', label: 'Email' },
+      { value: 'phone', label: 'Phone' },
+      { value: 'none', label: 'No contact', disabled: true },
+    ]}
+  ></lf-radio-group>
+`
+
+const submitButton = () => html`
+  <button
+    type="submit"
+    style="
+      background: var(--lf-color-primary);
+      border: none;
+      border-radius: var(--lf-radius-md, 0.625rem);
+      color: var(--lf-color-on-primary);
+      cursor: pointer;
+      font: inherit;
+      font-size: var(--lf-font-size-base, 1rem);
+      font-weight: var(--lf-font-weight-semibold, 600);
+      min-height: 2.75rem;
+      padding: var(--lf-space-3, 0.625rem) var(--lf-space-4, 1rem);
+      width: 100%;
+    "
+  >Send message</button>
+`
+
+// ─── Colour swatches helper ───────────────────────────────────────────────────
+
+const colourSwatches = () => html`
+  <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem">
+    ${['primary', 'success', 'warning', 'info', 'error'].map(
+      (role) => html`
+        <div style="display:flex; flex-direction:column; align-items:center; gap:0.25rem">
+          <div
+            style="
+              background:var(--lf-color-${role});
+              border-radius:var(--lf-radius-sm, 0.25rem);
+              height:2rem;
+              width:3.5rem;
+            "
+          ></div>
+          <span
+            style="
+              color:var(--lf-color-label);
+              font-family:var(--lf-font-family-base, system-ui, sans-serif);
+              font-size:0.7rem;
+            "
+          >${role}</span>
+        </div>
+      `
+    )}
+  </div>
+`
+
+// ─── Light ────────────────────────────────────────────────────────────────────
+
+export const Light: Story = {
+  name: 'Light (default)',
   render: () => html`
     <div
+      data-theme="light"
       style="
-        --lf-color-primary: #a78bfa;
-        --lf-color-primary-hover: #8b5cf6;
-        --lf-color-on-primary: #1c1c2e;
-        --lf-color-secondary: #1c1c2e;
-        --lf-color-secondary-hover: #2e2e45;
-        --lf-color-secondary-border: #a78bfa;
-        --lf-color-on-secondary: #c4b5fd;
-        --lf-color-focus-ring: #a78bfa;
-        --lf-color-label: #e5e7eb;
-        --lf-color-hint: #9ca3af;
-        --lf-color-error: #f87171;
-        --lf-color-input-bg: #1f1f35;
-        --lf-color-input-text: #f9fafb;
-        --lf-color-input-border: #4b5563;
-        --lf-color-input-border-focus: #a78bfa;
-        --lf-color-input-placeholder: #6b7280;
-        --lf-color-input-disabled-bg: #2d2d45;
-        --lf-color-input-disabled-text: #6b7280;
-        background: #111827;
+        background: var(--lf-color-surface, #ffffff);
         border-radius: var(--lf-radius-md, 0.625rem);
         display: grid;
         gap: 1.25rem;
@@ -64,47 +128,75 @@ export const Dark: Story = {
         width: min(28rem, 100%);
       "
     >
-      <lf-form-field
-        label="Email address"
-        name="email"
-        type="email"
-        placeholder="you@example.com"
-        hint="We'll never share your email."
-      ></lf-form-field>
+      ${colourSwatches()}
+      ${demoForm()}
+      ${submitButton()}
+    </div>
+  `,
+}
 
-      <lf-form-field
-        label="Message"
-        name="message"
-        multiline
-        placeholder="Write your message…"
-      ></lf-form-field>
+// ─── Dark ─────────────────────────────────────────────────────────────────────
 
-      <lf-radio-group
-        label="Preferred contact"
-        name="contact"
-        .options=${[
-          { value: 'email', label: 'Email' },
-          { value: 'phone', label: 'Phone' },
-          { value: 'none', label: 'None', disabled: true },
-        ]}
-      ></lf-radio-group>
+export const Dark: Story = {
+  name: 'Dark',
+  render: () => html`
+    <div
+      data-theme="dark"
+      style="
+        background: var(--lf-color-surface, #111827);
+        border-radius: var(--lf-radius-md, 0.625rem);
+        display: grid;
+        gap: 1.25rem;
+        padding: 1.5rem;
+        width: min(28rem, 100%);
+      "
+    >
+      ${colourSwatches()}
+      ${demoForm()}
+      ${submitButton()}
+    </div>
+  `,
+}
 
-      <button
-        type="submit"
+// ─── Side by side ─────────────────────────────────────────────────────────────
+
+export const SideBySide: Story = {
+  name: 'Light & Dark side by side',
+  render: () => html`
+    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; align-items:flex-start">
+      <div
+        data-theme="light"
         style="
-          background: var(--lf-color-primary, #5b21b6);
-          border: none;
+          background: var(--lf-color-surface, #ffffff);
           border-radius: var(--lf-radius-md, 0.625rem);
-          color: var(--lf-color-on-primary, #ffffff);
-          cursor: pointer;
-          font: inherit;
-          font-size: var(--lf-font-size-base, 1rem);
-          font-weight: var(--lf-font-weight-semibold, 600);
-          min-height: 2.75rem;
-          padding: var(--lf-space-3, 0.625rem) var(--lf-space-4, 1rem);
-          width: 100%;
+          display: grid;
+          gap: 1rem;
+          padding: 1.25rem;
+          width: min(24rem, 100%);
         "
-      >Send message</button>
+      >
+        <p style="color:var(--lf-color-label); font-family:var(--lf-font-family-base, system-ui, sans-serif); font-size:0.875rem; font-weight:600; margin:0">Light mode</p>
+        ${colourSwatches()}
+        ${demoForm()}
+        ${submitButton()}
+      </div>
+
+      <div
+        data-theme="dark"
+        style="
+          background: var(--lf-color-surface, #111827);
+          border-radius: var(--lf-radius-md, 0.625rem);
+          display: grid;
+          gap: 1rem;
+          padding: 1.25rem;
+          width: min(24rem, 100%);
+        "
+      >
+        <p style="color:var(--lf-color-label); font-family:var(--lf-font-family-base, system-ui, sans-serif); font-size:0.875rem; font-weight:600; margin:0">Dark mode</p>
+        ${colourSwatches()}
+        ${demoForm()}
+        ${submitButton()}
+      </div>
     </div>
   `,
 }
@@ -152,10 +244,10 @@ export const Compact: Story = {
 
       <button
         style="
-          background: var(--lf-color-primary, #5b21b6);
+          background: var(--lf-color-primary);
           border: none;
           border-radius: var(--lf-radius-md, 0.625rem);
-          color: var(--lf-color-on-primary, #ffffff);
+          color: var(--lf-color-on-primary);
           cursor: pointer;
           font: inherit;
           font-size: var(--lf-font-size-base, 0.875rem);
@@ -187,6 +279,9 @@ export const HighContrast: Story = {
         --lf-color-label: #000000;
         --lf-color-hint: #595959;
         --lf-color-error: #c00000;
+        --lf-color-success: #006400;
+        --lf-color-warning: #7a4100;
+        --lf-color-info: #00008b;
         --lf-color-input-bg: #ffffff;
         --lf-color-input-text: #000000;
         --lf-color-input-border: #767676;
@@ -201,6 +296,8 @@ export const HighContrast: Story = {
         width: min(28rem, 100%);
       "
     >
+      ${colourSwatches()}
+
       <lf-form-field
         label="Username"
         name="username"
@@ -228,10 +325,10 @@ export const HighContrast: Story = {
 
       <button
         style="
-          background: var(--lf-color-primary, #0000ee);
-          border: 2px solid var(--lf-color-primary, #0000ee);
+          background: var(--lf-color-primary);
+          border: 2px solid var(--lf-color-primary);
           border-radius: var(--lf-radius-md, 0);
-          color: var(--lf-color-on-primary, #ffffff);
+          color: var(--lf-color-on-primary);
           cursor: pointer;
           font: inherit;
           font-size: var(--lf-font-size-base, 1rem);
@@ -244,3 +341,4 @@ export const HighContrast: Story = {
     </div>
   `,
 }
+

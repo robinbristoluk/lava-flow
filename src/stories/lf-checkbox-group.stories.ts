@@ -126,10 +126,9 @@ export const WithinAForm: CheckboxGroupStory = {
       @submit=${(e: Event) => {
         e.preventDefault()
         const data = new FormData(e.target as HTMLFormElement)
-        const result: Record<string, string | string[]> = {}
+        const result: Record<string, string[]> = {}
         for (const key of new Set(data.keys())) {
-          const vals = data.getAll(key) as string[]
-          result[key] = vals.length === 1 ? (vals[0] as string) : vals
+          result[key] = data.getAll(key) as string[]
         }
         alert('Submitted: ' + JSON.stringify(result))
       }}

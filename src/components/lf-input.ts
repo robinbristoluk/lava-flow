@@ -182,6 +182,8 @@ export class LfInput extends LitElement implements LfInputPickedProps {
   }
 
   override render() {
+    const ariaInvalid =
+      this.error || (this._touched && !this.internals.validity.valid) ? 'true' : nothing
     return html`
       <input
         part="input"
@@ -198,6 +200,7 @@ export class LfInput extends LitElement implements LfInputPickedProps {
         minlength=${this.minLength > 0 ? this.minLength : nothing}
         maxlength=${this.maxLength > 0 ? this.maxLength : nothing}
         inputmode=${this.inputMode}
+        aria-invalid=${ariaInvalid}
         @input=${this.onNativeInput}
         @change=${this.onNativeChange}
         @blur=${this.onNativeBlur}

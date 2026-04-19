@@ -56,6 +56,21 @@
 
     // ─── Radius ───────────────────────────────────────────────────────────
 
+    --lf-radius-sm: 0.25rem;
     --lf-radius-md: 0.625rem;
+
+    // ─── Motion ───────────────────────────────────────────────────────────
+
+    --lf-transition-duration: 150ms;
+    --lf-transition-easing: ease;
+
+    // ─── Shadow ───────────────────────────────────────────────────────────
+
+    --lf-shadow-popover: 0 4px 12px rgb(0 0 0 / 10%);
+
+    // ─── Component sizes ──────────────────────────────────────────────────
+
+    --lf-checkbox-size: 1.125rem;
+    --lf-radio-size: 1.125rem;
   }
 }

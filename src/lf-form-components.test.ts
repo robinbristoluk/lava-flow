@@ -232,6 +232,30 @@ describe('lf-input', () => {
 
     el.remove()
   })
+
+  it('sets aria-invalid on the native input when error is present', async () => {
+    const el = new LfInput()
+    el.error = 'Required'
+    document.body.append(el)
+    await el.updateComplete
+
+    const input = el.shadowRoot?.querySelector('input')
+    expect(input?.getAttribute('aria-invalid')).toBe('true')
+
+    el.remove()
+  })
+
+  it('does not set aria-invalid when there is no error and field is untouched', async () => {
+    const el = new LfInput()
+    el.required = true
+    document.body.append(el)
+    await el.updateComplete
+
+    const input = el.shadowRoot?.querySelector('input')
+    expect(input?.getAttribute('aria-invalid')).toBeNull()
+
+    el.remove()
+  })
 })
 
 // ─── lf-textarea ──────────────────────────────────────────────────────────────
@@ -574,7 +598,27 @@ describe('lf-form-field', () => {
     el.remove()
   })
 
-  it('fires lf-change when the input value changes', async () => {
+  it('fires lf-input on every keystroke', async () => {
+    const el = new LfFormField()
+    el.label = 'Name'
+    el.name = 'name'
+    document.body.append(el)
+    await el.updateComplete
+
+    const handler = vi.fn()
+    el.addEventListener('lf-input', handler)
+
+    const input = el.shadowRoot?.querySelector('input') as HTMLInputElement
+    input.value = 'Jane'
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+
+    expect(handler).toHaveBeenCalledTimes(1)
+    expect((handler.mock.calls[0]?.[0] as CustomEvent<{ value: string }>).detail.value).toBe('Jane')
+
+    el.remove()
+  })
+
+  it('fires lf-change on native change event (blur / Enter)', async () => {
     const el = new LfFormField()
     el.label = 'Name'
     el.name = 'name'
@@ -586,7 +630,7 @@ describe('lf-form-field', () => {
 
     const input = el.shadowRoot?.querySelector('input') as HTMLInputElement
     input.value = 'Jane'
-    input.dispatchEvent(new Event('input', { bubbles: true }))
+    input.dispatchEvent(new Event('change', { bubbles: true }))
 
     expect(handler).toHaveBeenCalledTimes(1)
     expect((handler.mock.calls[0]?.[0] as CustomEvent<{ value: string }>).detail.value).toBe('Jane')
@@ -1155,7 +1199,27 @@ describe('lf-form-field multiline', () => {
     el.remove()
   })
 
-  it('fires lf-change when the textarea value changes', async () => {
+  it('fires lf-input on every keystroke (multiline)', async () => {
+    const el = new LfFormField()
+    el.label = 'Message'
+    el.multiline = true
+    document.body.append(el)
+    await el.updateComplete
+
+    const handler = vi.fn()
+    el.addEventListener('lf-input', handler)
+
+    const textarea = el.shadowRoot?.querySelector('textarea') as HTMLTextAreaElement
+    textarea.value = 'Hello world'
+    textarea.dispatchEvent(new Event('input', { bubbles: true }))
+
+    expect(handler).toHaveBeenCalledTimes(1)
+    expect((handler.mock.calls[0]?.[0] as CustomEvent<{ value: string }>).detail.value).toBe('Hello world')
+
+    el.remove()
+  })
+
+  it('fires lf-change on native change event (multiline)', async () => {
     const el = new LfFormField()
     el.label = 'Message'
     el.multiline = true
@@ -1167,7 +1231,7 @@ describe('lf-form-field multiline', () => {
 
     const textarea = el.shadowRoot?.querySelector('textarea') as HTMLTextAreaElement
     textarea.value = 'Hello world'
-    textarea.dispatchEvent(new Event('input', { bubbles: true }))
+    textarea.dispatchEvent(new Event('change', { bubbles: true }))
 
     expect(handler).toHaveBeenCalledTimes(1)
     expect((handler.mock.calls[0]?.[0] as CustomEvent<{ value: string }>).detail.value).toBe('Hello world')

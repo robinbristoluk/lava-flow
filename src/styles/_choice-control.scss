@@ -1,0 +1,173 @@
+// Shared styles for checkbox and radio choice controls.
+// @use './choice-control' as cc; then call the mixins with the appropriate class names.
+
+// Visually-hidden native input (identical for checkbox and radio).
+@mixin native-hidden($class) {
+  .#{$class} {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}
+
+// Option row layout (used by checkbox-group and radio-group).
+@mixin option-layout($class) {
+  .#{$class} {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    gap: var(--lf-space-2, 0.5rem);
+    user-select: none;
+  }
+}
+
+// Disabled option row modifier.
+@mixin option-disabled($modifier-class) {
+  .#{$modifier-class} {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+// Option label text (shared between checkbox and radio).
+@mixin option-label($class) {
+  .#{$class} {
+    color: var(--lf-color-input-text, #111827);
+    font-family: var(--lf-font-family-base, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    font-size: var(--lf-font-size-base, 1rem);
+    line-height: var(--lf-line-height-base, 1.2);
+  }
+}
+
+// Focus ring applied via the hidden native input's :focus-visible.
+@mixin focus-ring($native-class, $mark-class) {
+  .#{$native-class}:focus-visible + .#{$mark-class} {
+    border-color: var(--lf-color-input-border-focus, #5b21b6);
+    outline: 2px solid var(--lf-color-focus-ring, #7c3aed);
+    outline-offset: 2px;
+  }
+}
+
+// Invalid border on the custom indicator.
+@mixin invalid-border($mark-class) {
+  :host([data-invalid]) .#{$mark-class} {
+    border-color: var(--lf-color-error, #dc2626);
+  }
+}
+
+// ─── Checkbox-specific ────────────────────────────────────────────────────────
+
+// Custom checkbox indicator box (square, with checkmark drawn via ::after).
+@mixin checkbox-indicator($class) {
+  .#{$class} {
+    align-items: center;
+    background-color: var(--lf-color-input-bg, #ffffff);
+    border: 2px solid var(--lf-color-input-border, #d1d5db);
+    border-radius: var(--lf-radius-sm, 0.25rem);
+    display: flex;
+    flex-shrink: 0;
+    height: var(--lf-checkbox-size, 1.125rem);
+    justify-content: center;
+    transition:
+      border-color var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease),
+      background-color var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease);
+    width: var(--lf-checkbox-size, 1.125rem);
+  }
+
+  .#{$class}::after {
+    border-bottom: 2px solid var(--lf-color-on-primary, #ffffff);
+    border-right: 2px solid var(--lf-color-on-primary, #ffffff);
+    content: '';
+    display: block;
+    height: calc(var(--lf-checkbox-size, 1.125rem) * 0.55);
+    opacity: 0;
+    transform: rotate(45deg) scale(0) translate(-10%, -15%);
+    transition:
+      opacity var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease),
+      transform var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease);
+    width: calc(var(--lf-checkbox-size, 1.125rem) * 0.3);
+  }
+}
+
+// Checkbox checked state (native input adjacent to the custom mark).
+@mixin checkbox-checked($native-class, $mark-class) {
+  .#{$native-class}:checked + .#{$mark-class} {
+    background-color: var(--lf-color-primary, #5b21b6);
+    border-color: var(--lf-color-primary, #5b21b6);
+  }
+
+  .#{$native-class}:checked + .#{$mark-class}::after {
+    opacity: 1;
+    transform: rotate(45deg) scale(1) translate(-10%, -15%);
+  }
+}
+
+// Mobile touch-target for checkbox.
+@mixin checkbox-mobile($class) {
+  @media (max-width: 480px) {
+    .#{$class} {
+      height: var(--lf-checkbox-size, 1.25rem);
+      width: var(--lf-checkbox-size, 1.25rem);
+    }
+  }
+}
+
+// ─── Radio-specific ───────────────────────────────────────────────────────────
+
+// Custom radio indicator (circular, with filled dot via ::after).
+@mixin radio-indicator($class) {
+  .#{$class} {
+    align-items: center;
+    background-color: var(--lf-color-input-bg, #ffffff);
+    border: 2px solid var(--lf-color-input-border, #d1d5db);
+    border-radius: 50%;
+    display: flex;
+    flex-shrink: 0;
+    height: var(--lf-radio-size, 1.125rem);
+    justify-content: center;
+    transition:
+      border-color var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease),
+      background-color var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease);
+    width: var(--lf-radio-size, 1.125rem);
+  }
+
+  .#{$class}::after {
+    background-color: var(--lf-color-primary, #5b21b6);
+    border-radius: 50%;
+    content: '';
+    display: block;
+    height: calc(var(--lf-radio-size, 1.125rem) * 0.45);
+    opacity: 0;
+    transform: scale(0);
+    transition:
+      opacity var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease),
+      transform var(--lf-transition-duration, 150ms) var(--lf-transition-easing, ease);
+    width: calc(var(--lf-radio-size, 1.125rem) * 0.45);
+  }
+}
+
+// Radio checked state.
+@mixin radio-checked($native-class, $mark-class) {
+  .#{$native-class}:checked + .#{$mark-class} {
+    border-color: var(--lf-color-primary, #5b21b6);
+  }
+
+  .#{$native-class}:checked + .#{$mark-class}::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Mobile touch-target for radio.
+@mixin radio-mobile($class) {
+  @media (max-width: 480px) {
+    .#{$class} {
+      height: var(--lf-radio-size, 1.25rem);
+      width: var(--lf-radio-size, 1.25rem);
+    }
+  }
+}

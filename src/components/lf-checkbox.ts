@@ -126,6 +126,8 @@ export class LfCheckbox extends LitElement {
 
   override render() {
     const id = this.fieldId || this.inputId
+    const ariaInvalid =
+      this.error || (this._touched && !this.internals.validity.valid) ? 'true' : nothing
 
     return html`
       <label class="option" part="option">
@@ -139,6 +141,7 @@ export class LfCheckbox extends LitElement {
           .checked=${this.checked}
           ?required=${this.required}
           ?disabled=${this.disabled}
+          aria-invalid=${ariaInvalid}
           @change=${this.onNativeChange}
           @blur=${this.onNativeBlur}
         />

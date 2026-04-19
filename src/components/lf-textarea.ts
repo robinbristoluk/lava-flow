@@ -24,6 +24,9 @@ type LfTextareaPickedProps = Pick<
  * Accessible, form-associated multi-line text area web component.
  *
  * Set `field-id` to match a `<lf-label field-id="...">` in the same DOM scope.
+ * Set `described-by` to a space-separated list of IDs of external hint/error
+ * elements (e.g. `<lf-form-hint>` / `<lf-form-error>`) to wire up
+ * `aria-describedby` on the native `<textarea>`.
  * Set `error` to a non-empty string to show the field in its invalid visual state.
  * The field also enters the invalid state automatically when native constraint
  * validation fails (e.g. `required` + empty value, `min-length` too short) once
@@ -111,6 +114,14 @@ export class LfTextarea extends LitElement implements LfTextareaPickedProps {
   @property({ type: String, reflect: true })
   resize: LfTextareaResize = 'vertical'
 
+  /**
+   * Space-separated list of element IDs that describe this field.
+   * Forwarded to the native `<textarea aria-describedby="...">`.
+   * Use this when pairing with standalone `<lf-form-hint>` or `<lf-form-error>`.
+   */
+  @property({ type: String, attribute: 'described-by' })
+  describedBy = ''
+
   /** whether the user has interacted with the field (blur or input event) */
   @state() private _touched = false
 
@@ -186,6 +197,7 @@ export class LfTextarea extends LitElement implements LfTextareaPickedProps {
   }
 
   override render() {
+    const isInvalid = this.error.length > 0 || (this._touched && !this.internals.validity.valid)
     return html`
       <textarea
         part="textarea"
@@ -201,6 +213,8 @@ export class LfTextarea extends LitElement implements LfTextareaPickedProps {
         minlength=${this.minLength > 0 ? this.minLength : nothing}
         maxlength=${this.maxLength > 0 ? this.maxLength : nothing}
         rows=${this.rows}
+        aria-describedby=${this.describedBy || nothing}
+        aria-invalid=${isInvalid ? 'true' : nothing}
         @input=${this.onNativeInput}
         @change=${this.onNativeChange}
         @blur=${this.onNativeBlur}

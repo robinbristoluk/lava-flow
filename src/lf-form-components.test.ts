@@ -379,6 +379,42 @@ describe('lf-textarea', () => {
 
     el.remove()
   })
+
+  it('sets aria-invalid on the inner textarea when error is present', async () => {
+    const el = new LfTextarea()
+    el.error = 'Required'
+    document.body.append(el)
+    await el.updateComplete
+
+    const textarea = el.shadowRoot?.querySelector('textarea')
+    expect(textarea?.getAttribute('aria-invalid')).toBe('true')
+
+    el.remove()
+  })
+
+  it('does not set aria-invalid when there is no error and field is untouched', async () => {
+    const el = new LfTextarea()
+    el.required = true
+    document.body.append(el)
+    await el.updateComplete
+
+    const textarea = el.shadowRoot?.querySelector('textarea')
+    expect(textarea?.getAttribute('aria-invalid')).toBeNull()
+
+    el.remove()
+  })
+
+  it('forwards described-by to aria-describedby on the inner textarea', async () => {
+    const el = new LfTextarea()
+    el.describedBy = 'hint-1 error-1'
+    document.body.append(el)
+    await el.updateComplete
+
+    const textarea = el.shadowRoot?.querySelector('textarea')
+    expect(textarea?.getAttribute('aria-describedby')).toBe('hint-1 error-1')
+
+    el.remove()
+  })
 })
 
 // ─── lf-form-field ────────────────────────────────────────────────────────────

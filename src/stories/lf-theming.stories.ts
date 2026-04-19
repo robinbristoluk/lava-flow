@@ -244,32 +244,54 @@ export const SideBySide: Story = {
 
 const ROLE_META: Record<
   (typeof COLOUR_ROLES)[number],
-  { label: string; icon: string; message: string }
+  {
+    label: string
+    icon: string
+    message: string
+    complementaryLabel: string
+    complementaryProgressLabel: string
+    complementaryProgressPct: number
+  }
 > = {
   primary: {
     label: 'Primary',
     icon: '★',
     message: 'This action uses your primary brand colour.',
+    complementaryLabel: 'Amber',
+    complementaryProgressLabel: 'Milestone',
+    complementaryProgressPct: 65,
   },
   success: {
     label: 'Success',
     icon: '✓',
     message: 'Your changes have been saved successfully.',
+    complementaryLabel: 'Cyan',
+    complementaryProgressLabel: 'In review',
+    complementaryProgressPct: 70,
   },
   warning: {
     label: 'Warning',
     icon: '⚠',
     message: 'Please review before continuing.',
+    complementaryLabel: 'Red',
+    complementaryProgressLabel: 'Critical',
+    complementaryProgressPct: 55,
   },
   info: {
     label: 'Info',
     icon: 'ℹ',
     message: 'New features are available in this release.',
+    complementaryLabel: 'Violet',
+    complementaryProgressLabel: 'Action needed',
+    complementaryProgressPct: 60,
   },
   error: {
     label: 'Error',
     icon: '✕',
     message: 'Something went wrong. Please try again.',
+    complementaryLabel: 'Amber',
+    complementaryProgressLabel: 'Warnings',
+    complementaryProgressPct: 45,
   },
 }
 
@@ -331,8 +353,8 @@ const variationCard = (role: (typeof COLOUR_ROLES)[number]) => {
         >${meta.message}</p>
       </div>
 
-      <!-- Chip row: base · accent · complementary -->
-      <div style="display:flex; gap:0.375rem; flex-wrap:wrap; margin-bottom:0.5rem">
+      <!-- Chip row: base · accent -->
+      <div style="display:flex; gap:0.375rem; flex-wrap:wrap; margin-bottom:0.75rem">
         <span
           style="
             background: var(--lf-color-${role});
@@ -356,39 +378,93 @@ const variationCard = (role: (typeof COLOUR_ROLES)[number]) => {
             padding: 0.2rem 0.625rem;
           "
         >Accent</span>
-        <span
-          style="
-            background: var(--lf-color-${role}-complementary);
-            border-radius: 999px;
-            color: var(--lf-color-on-primary);
-            font-family: var(--lf-font-family-base, system-ui, sans-serif);
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 0.2rem 0.625rem;
-          "
-        >Complementary</span>
       </div>
 
-      <!-- Inline text: contrast colour for a callout link -->
+      <!-- Complementary pairing: two-tone progress bar + paired badge row -->
       <p
         style="
           color: var(--lf-color-hint, #6b7280);
           font-family: var(--lf-font-family-base, system-ui, sans-serif);
-          font-size: 0.75rem;
-          margin: 0;
+          font-size: 0.65rem;
+          font-weight: 600;
+          letter-spacing: 0.04em;
+          margin: 0 0 0.35rem;
+          text-transform: uppercase;
+        "
+      >Complementary pairing</p>
+
+      <!-- Two-tone progress bar -->
+      <div
+        style="
+          border-radius: 999px;
+          display: flex;
+          height: 0.5rem;
+          margin-bottom: 0.3rem;
+          overflow: hidden;
+          width: 100%;
+        "
+        role="img"
+        aria-label="${meta.label} ${meta.complementaryProgressPct}%, ${meta.complementaryLabel} ${100 - meta.complementaryProgressPct}%"
+      >
+        <div style="background:var(--lf-color-${role}); flex:${meta.complementaryProgressPct}"></div>
+        <div style="background:var(--lf-color-${role}-complementary); flex:${100 - meta.complementaryProgressPct}"></div>
+      </div>
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 0.625rem;
         "
       >
-        Contrast text:
-        <a
-          href="#"
+        <span
           style="
             color: var(--lf-color-${role}-contrast);
-            font-weight: 600;
-            text-decoration: underline;
+            font-family: var(--lf-font-family-base, system-ui, sans-serif);
+            font-size: 0.65rem;
           "
-          onclick="return false"
-        >${meta.label} detail →</a>
-      </p>
+        >${meta.label} · ${meta.complementaryProgressPct}%</span>
+        <span
+          style="
+            color: var(--lf-color-hint, #6b7280);
+            font-family: var(--lf-font-family-base, system-ui, sans-serif);
+            font-size: 0.65rem;
+          "
+        >${meta.complementaryProgressLabel} · ${100 - meta.complementaryProgressPct}%</span>
+      </div>
+
+      <!-- Paired badge row -->
+      <div style="display:flex; gap:0.375rem; flex-wrap:wrap; align-items:center">
+        <span
+          style="
+            background: var(--lf-color-${role});
+            border-radius: var(--lf-radius-sm, 0.25rem);
+            color: var(--lf-color-on-${role});
+            font-family: var(--lf-font-family-base, system-ui, sans-serif);
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+          "
+        >${meta.label}</span>
+        <span
+          style="
+            color: var(--lf-color-hint, #6b7280);
+            font-family: var(--lf-font-family-base, system-ui, sans-serif);
+            font-size: 0.65rem;
+          "
+        >paired with</span>
+        <span
+          style="
+            background: transparent;
+            border: 2px solid var(--lf-color-${role}-complementary);
+            border-radius: var(--lf-radius-sm, 0.25rem);
+            color: var(--lf-color-${role}-complementary);
+            font-family: var(--lf-font-family-base, system-ui, sans-serif);
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+          "
+        >${meta.complementaryLabel}</span>
+      </div>
     </div>
   `
 }
@@ -402,8 +478,11 @@ export const ColourVariations: Story = {
           'Practical examples of the **accent**, **contrast**, and **complementary** sub-tokens ' +
           'for each of the five roles. Each card shows:\n\n' +
           '- **Alert banner** — `accent` background, base left-border, `contrast` body text, base icon chip\n' +
-          '- **Chips** — base fill, accent tinted outline, complementary fill\n' +
-          '- **Inline link** — `contrast` colour for text on a light surface\n\n' +
+          '- **Chips** — base fill, accent tinted outline\n' +
+          '- **Two-tone progress bar** — role base fill on the left, complementary fill on the right, ' +
+          'illustrating how the paired hue works as a visual counterpart (e.g. primary/amber, success/cyan)\n' +
+          '- **Paired badge row** — role base badge alongside a complementary badge, as used for ' +
+          'category + status labelling\n\n' +
           'Toggle dark mode via `data-theme` on `<html>` to see all tokens adapt automatically.',
       },
     },

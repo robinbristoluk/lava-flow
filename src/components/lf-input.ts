@@ -1,5 +1,5 @@
 import { LitElement, html, nothing, unsafeCSS } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { customElement, property, state } from 'lit/decorators.js'
 import styles from '../styles/lf-input.scss?inline'
 import type { LfAllFormProps, LfInputMode, LfInputType } from '../types/form-field'
 
@@ -25,6 +25,9 @@ type LfInputPickedProps = Pick<
  *
  * Set `field-id` to match a `<lf-label field-id="...">` in the same DOM scope.
  * Set `error` to a non-empty string to show the field in its invalid visual state.
+ * The field also enters the invalid state automatically when native constraint
+ * validation fails (e.g. `required` + empty value, `min-length` too short) once
+ * the user has interacted with the field.
  *
  * @fires lf-input - Fired on every keystroke; `detail.value` holds the current value.
  * @fires lf-change - Fired when the value is committed (blur / Enter); `detail.value` holds the value.
@@ -107,27 +110,51 @@ export class LfInput extends LitElement implements LfInputPickedProps {
   @property({ type: String })
   error = ''
 
+  /** whether the user has interacted with the field (blur or input event) */
+  @state() private _touched = false
+
   override updated(changed: Map<string, unknown>) {
-    if (changed.has('value') || changed.has('required')) {
+    if (
+      changed.has('value') ||
+      changed.has('required') ||
+      changed.has('minLength') ||
+      changed.has('maxLength')
+    ) {
       this.syncFormValue()
     }
-    if (changed.has('error')) {
-      this.toggleAttribute('data-invalid', this.error.length > 0)
-    }
+    this.updateInvalidState()
   }
 
   private syncFormValue(): void {
     this.internals.setFormValue(this.value)
     if (this.required && this.value.length === 0) {
       this.internals.setValidity({ valueMissing: true }, 'Please fill out this field.')
+    } else if (this.minLength > 0 && this.value.length > 0 && this.value.length < this.minLength) {
+      this.internals.setValidity(
+        { tooShort: true },
+        `Please lengthen this text to ${this.minLength} characters or more.`,
+      )
+    } else if (this.maxLength > 0 && this.value.length > this.maxLength) {
+      this.internals.setValidity(
+        { tooLong: true },
+        `Please shorten this text to ${this.maxLength} characters or fewer.`,
+      )
     } else {
       this.internals.setValidity({})
     }
   }
 
+  private updateInvalidState(): void {
+    this.toggleAttribute(
+      'data-invalid',
+      this.error.length > 0 || (this._touched && !this.internals.validity.valid),
+    )
+  }
+
   private readonly onNativeInput = (e: Event): void => {
     const input = e.target as HTMLInputElement
     this.value = input.value
+    this._touched = true
     this.dispatchEvent(
       new CustomEvent('lf-input', {
         bubbles: true,
@@ -140,6 +167,7 @@ export class LfInput extends LitElement implements LfInputPickedProps {
   private readonly onNativeChange = (e: Event): void => {
     const input = e.target as HTMLInputElement
     this.value = input.value
+    this._touched = true
     this.dispatchEvent(
       new CustomEvent('lf-change', {
         bubbles: true,
@@ -147,6 +175,10 @@ export class LfInput extends LitElement implements LfInputPickedProps {
         detail: { value: this.value },
       })
     )
+  }
+
+  private readonly onNativeBlur = (): void => {
+    this._touched = true
   }
 
   override render() {
@@ -168,6 +200,7 @@ export class LfInput extends LitElement implements LfInputPickedProps {
         inputmode=${this.inputMode}
         @input=${this.onNativeInput}
         @change=${this.onNativeChange}
+        @blur=${this.onNativeBlur}
       />
     `
   }

@@ -5,27 +5,49 @@ if (!('attachInternals' in HTMLElement.prototype)) {
     configurable: true,
     writable: true,
     value(): ElementInternals {
+      const VALIDITY_FLAGS = [
+        'badInput',
+        'customError',
+        'patternMismatch',
+        'rangeOverflow',
+        'rangeUnderflow',
+        'stepMismatch',
+        'tooLong',
+        'tooShort',
+        'typeMismatch',
+        'valueMissing',
+      ] as const
+
+      const validityState = {
+        badInput: false,
+        customError: false,
+        patternMismatch: false,
+        rangeOverflow: false,
+        rangeUnderflow: false,
+        stepMismatch: false,
+        tooLong: false,
+        tooShort: false,
+        typeMismatch: false,
+        valid: true,
+        valueMissing: false,
+      }
+
       return {
         setFormValue: () => {},
-        setValidity: () => {},
-        checkValidity: () => true,
-        reportValidity: () => true,
-        form: null,
-        validity: {
-          badInput: false,
-          customError: false,
-          patternMismatch: false,
-          rangeOverflow: false,
-          rangeUnderflow: false,
-          stepMismatch: false,
-          tooLong: false,
-          tooShort: false,
-          typeMismatch: false,
-          valid: true,
-          valueMissing: false,
+        setValidity(flags: Record<string, boolean> = {}) {
+          for (const flag of VALIDITY_FLAGS) {
+            validityState[flag] = !!flags[flag]
+          }
+          validityState.valid = VALIDITY_FLAGS.every((f) => !validityState[f])
+        },
+        checkValidity: () => validityState.valid,
+        reportValidity: () => validityState.valid,
+        get validity() {
+          return validityState as unknown as ValidityState
         },
         validationMessage: '',
         willValidate: false,
+        form: null,
         labels: null as unknown as NodeList,
         shadowRoot: null,
         role: null,

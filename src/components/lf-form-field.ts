@@ -1,5 +1,5 @@
 import { LitElement, html, nothing, unsafeCSS } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { customElement, property, state } from 'lit/decorators.js'
 import styles from '../styles/lf-form-field.scss?inline'
 import type { LfAllFormProps, LfInputMode, LfInputType } from '../types/form-field'
 
@@ -118,27 +118,51 @@ export class LfFormField extends LitElement implements LfAllFormProps {
   @property({ type: String, attribute: 'field-id' })
   fieldId = ''
 
+  /** whether the user has interacted with the field (blur or input event) */
+  @state() private _touched = false
+
   override updated(changed: Map<string, unknown>) {
-    if (changed.has('value') || changed.has('required')) {
+    if (
+      changed.has('value') ||
+      changed.has('required') ||
+      changed.has('minLength') ||
+      changed.has('maxLength')
+    ) {
       this.syncFormValue()
     }
-    if (changed.has('error')) {
-      this.toggleAttribute('data-invalid', this.error.length > 0)
-    }
+    this.updateInvalidState()
   }
 
   private syncFormValue(): void {
     this.internals.setFormValue(this.value)
     if (this.required && this.value.length === 0) {
       this.internals.setValidity({ valueMissing: true }, 'Please fill out this field.')
+    } else if (this.minLength > 0 && this.value.length > 0 && this.value.length < this.minLength) {
+      this.internals.setValidity(
+        { tooShort: true },
+        `Please lengthen this text to ${this.minLength} characters or more.`,
+      )
+    } else if (this.maxLength > 0 && this.value.length > this.maxLength) {
+      this.internals.setValidity(
+        { tooLong: true },
+        `Please shorten this text to ${this.maxLength} characters or fewer.`,
+      )
     } else {
       this.internals.setValidity({})
     }
   }
 
+  private updateInvalidState(): void {
+    this.toggleAttribute(
+      'data-invalid',
+      this.error.length > 0 || (this._touched && !this.internals.validity.valid),
+    )
+  }
+
   private readonly onNativeChange = (e: Event): void => {
     const input = e.target as HTMLInputElement
     this.value = input.value
+    this._touched = true
     this.dispatchEvent(
       new CustomEvent('lf-change', {
         bubbles: true,
@@ -146,6 +170,10 @@ export class LfFormField extends LitElement implements LfAllFormProps {
         detail: { value: this.value },
       })
     )
+  }
+
+  private readonly onNativeBlur = (): void => {
+    this._touched = true
   }
 
   override render() {
@@ -173,9 +201,12 @@ export class LfFormField extends LitElement implements LfAllFormProps {
           aria-describedby=${[this.hint ? hintId : '', this.error ? errorId : '']
             .filter(Boolean)
             .join(' ') || nothing}
-          aria-invalid=${this.error ? 'true' : nothing}
+          aria-invalid=${(this.error || (this._touched && !this.internals.validity.valid))
+            ? 'true'
+            : nothing}
           @input=${this.onNativeChange}
           @change=${this.onNativeChange}
+          @blur=${this.onNativeBlur}
         />
         ${this.hint
           ? html`<span class="hint" part="hint" id=${hintId} role="note">${this.hint}</span>`

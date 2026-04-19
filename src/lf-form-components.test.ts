@@ -134,6 +134,68 @@ describe('lf-input', () => {
     el.remove()
   })
 
+  it('does not set data-invalid for required+empty before interaction', async () => {
+    const el = new LfInput()
+    el.required = true
+    document.body.append(el)
+    await el.updateComplete
+
+    expect(el.hasAttribute('data-invalid')).toBe(false)
+
+    el.remove()
+  })
+
+  it('sets data-invalid for required+empty after blur', async () => {
+    const el = new LfInput()
+    el.required = true
+    document.body.append(el)
+    await el.updateComplete
+
+    const input = el.shadowRoot?.querySelector('input') as HTMLInputElement
+    input.dispatchEvent(new Event('blur', { bubbles: true }))
+    await el.updateComplete
+
+    expect(el.hasAttribute('data-invalid')).toBe(true)
+
+    el.remove()
+  })
+
+  it('sets data-invalid when minLength is violated after input', async () => {
+    const el = new LfInput()
+    el.minLength = 5
+    document.body.append(el)
+    await el.updateComplete
+
+    const input = el.shadowRoot?.querySelector('input') as HTMLInputElement
+    input.value = 'hi'
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+    await el.updateComplete
+
+    expect(el.hasAttribute('data-invalid')).toBe(true)
+
+    el.remove()
+  })
+
+  it('clears data-invalid when minLength constraint is satisfied', async () => {
+    const el = new LfInput()
+    el.minLength = 3
+    document.body.append(el)
+    await el.updateComplete
+
+    const input = el.shadowRoot?.querySelector('input') as HTMLInputElement
+    input.value = 'hi'
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+    await el.updateComplete
+
+    input.value = 'hello'
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+    await el.updateComplete
+
+    expect(el.hasAttribute('data-invalid')).toBe(false)
+
+    el.remove()
+  })
+
   it('fires lf-input on native input event', async () => {
     const el = new LfInput()
     document.body.append(el)
@@ -264,6 +326,66 @@ describe('lf-form-field', () => {
     await el.updateComplete
 
     expect(el.hasAttribute('data-invalid')).toBe(false)
+
+    el.remove()
+  })
+
+  it('does not set data-invalid for required+empty before interaction', async () => {
+    const el = new LfFormField()
+    el.required = true
+    document.body.append(el)
+    await el.updateComplete
+
+    expect(el.hasAttribute('data-invalid')).toBe(false)
+
+    el.remove()
+  })
+
+  it('sets data-invalid for required+empty after blur', async () => {
+    const el = new LfFormField()
+    el.label = 'Name'
+    el.required = true
+    document.body.append(el)
+    await el.updateComplete
+
+    const input = el.shadowRoot?.querySelector('input') as HTMLInputElement
+    input.dispatchEvent(new Event('blur', { bubbles: true }))
+    await el.updateComplete
+
+    expect(el.hasAttribute('data-invalid')).toBe(true)
+
+    el.remove()
+  })
+
+  it('sets data-invalid when minLength is violated after input', async () => {
+    const el = new LfFormField()
+    el.label = 'Name'
+    el.minLength = 5
+    document.body.append(el)
+    await el.updateComplete
+
+    const input = el.shadowRoot?.querySelector('input') as HTMLInputElement
+    input.value = 'hi'
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+    await el.updateComplete
+
+    expect(el.hasAttribute('data-invalid')).toBe(true)
+
+    el.remove()
+  })
+
+  it('sets aria-invalid on inner input when required+empty after blur', async () => {
+    const el = new LfFormField()
+    el.label = 'Name'
+    el.required = true
+    document.body.append(el)
+    await el.updateComplete
+
+    const input = el.shadowRoot?.querySelector('input') as HTMLInputElement
+    input.dispatchEvent(new Event('blur', { bubbles: true }))
+    await el.updateComplete
+
+    expect(input.getAttribute('aria-invalid')).toBe('true')
 
     el.remove()
   })

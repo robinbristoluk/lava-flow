@@ -6,6 +6,12 @@
     <title>lava-flow</title>
     <script type="module" src="/src/index.ts"></script>
     <style>
+      :root {
+        --lf-color-primary: #6d28d9;
+        --lf-color-primary-hover: #5b21b6;
+        --lf-color-focus-ring: #581c87;
+      }
+
       body {
         align-items: center;
         background: #f5f3ff;
@@ -29,14 +35,12 @@
   </head>
   <body>
     <main>
-      <lf-theme primary-bg="#6d28d9" focus-ring="#581c87">
-        <div class="stack">
-          <lf-button label="Start flow" full-width>
-            <span slot="icon">🔥</span>
-          </lf-button>
-          <lf-button variant="secondary" label="Secondary action" full-width></lf-button>
-        </div>
-      </lf-theme>
+      <div class="stack">
+        <lf-button label="Start flow" full-width>
+          <span slot="icon">🔥</span>
+        </lf-button>
+        <lf-button variant="secondary" label="Secondary action" full-width></lf-button>
+      </div>
     </main>
   </body>
 </html>

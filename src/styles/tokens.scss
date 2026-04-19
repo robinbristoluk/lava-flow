@@ -77,6 +77,7 @@
 
     // Error (red)
     --lf-color-error: #dc2626;
+    --lf-color-on-error: #ffffff;              // text/icons on error base bg
     --lf-color-error-accent: #fee2e2;          // light tint — error alert backgrounds
     --lf-color-error-contrast: #7f1d1d;        // deep shade — error text/borders
     --lf-color-error-complementary: #b45309;   // amber — warm red+amber pairing
@@ -187,6 +188,7 @@
 
     // Error
     --lf-color-error: #f87171;
+    --lf-color-on-error: #450a0a;              // text/icons on error base bg
     --lf-color-error-accent: #450a0a;          // dark tint bg
     --lf-color-error-contrast: #fca5a5;        // light red for text on dark
     --lf-color-error-complementary: #fbbf24;   // lighter amber for dark surfaces

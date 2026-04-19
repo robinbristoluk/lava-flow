@@ -223,6 +223,7 @@ Each of the five semantic colour roles — **primary**, **success**, **warning**
 | Token | Light | Dark |
 |---|---|---|
 | `--lf-color-error` | `#dc2626` | `#f87171` |
+| `--lf-color-on-error` | `#ffffff` | `#450a0a` |
 | `--lf-color-error-accent` | `#fee2e2` | `#450a0a` |
 | `--lf-color-error-contrast` | `#7f1d1d` | `#fca5a5` |
 | `--lf-color-error-complementary` | `#b45309` | `#fbbf24` |

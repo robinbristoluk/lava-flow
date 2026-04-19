@@ -154,52 +154,115 @@ You can also force a mode with the `data-theme` attribute on any ancestor elemen
 
 ### Token reference
 
-| Token | Light default | Dark default | Group |
+Each of the five semantic colour roles — **primary**, **success**, **warning**, **info**, and **error** — exposes four sub-tokens plus three new palette variants:
+
+| Sub-token | Purpose |
+|---|---|
+| `--lf-color-{role}` | Base colour |
+| `--lf-color-{role}-hover` | Hover/pressed state |
+| `--lf-color-on-{role}` | Foreground (text/icon) placed *on* the base colour |
+| `--lf-color-{role}-accent` | Light tint — subtle backgrounds for badges, alerts, chips |
+| `--lf-color-{role}-contrast` | Deep shade — text or borders on light surfaces |
+| `--lf-color-{role}-complementary` | Harmoniously paired hue from a different colour family |
+
+#### Primary (violet)
+
+| Token | Light | Dark |
+|---|---|---|
+| `--lf-color-primary` | `#5b21b6` | `#7c3aed` |
+| `--lf-color-primary-hover` | `#4c1d95` | `#6d28d9` |
+| `--lf-color-on-primary` | `#ffffff` | `#ffffff` |
+| `--lf-color-primary-accent` | `#ede9fe` | `#1e1b4b` |
+| `--lf-color-primary-contrast` | `#2e1065` | `#c4b5fd` |
+| `--lf-color-primary-complementary` | `#f59e0b` | `#fbbf24` |
+
+#### Secondary (utility)
+
+| Token | Light | Dark |
+|---|---|---|
+| `--lf-color-secondary` | `#ffffff` | `#1e1b4b` |
+| `--lf-color-secondary-hover` | `#f5f3ff` | `#2e2a5e` |
+| `--lf-color-secondary-border` | `#5b21b6` | `#7c3aed` |
+| `--lf-color-on-secondary` | `#4c1d95` | `#c4b5fd` |
+
+#### Success (green)
+
+| Token | Light | Dark |
+|---|---|---|
+| `--lf-color-success` | `#16a34a` | `#4ade80` |
+| `--lf-color-success-hover` | `#15803d` | `#22c55e` |
+| `--lf-color-on-success` | `#ffffff` | `#052e16` |
+| `--lf-color-success-accent` | `#dcfce7` | `#052e16` |
+| `--lf-color-success-contrast` | `#14532d` | `#86efac` |
+| `--lf-color-success-complementary` | `#0891b2` | `#22d3ee` |
+
+#### Warning (amber)
+
+| Token | Light | Dark |
+|---|---|---|
+| `--lf-color-warning` | `#d97706` | `#fbbf24` |
+| `--lf-color-warning-hover` | `#b45309` | `#f59e0b` |
+| `--lf-color-on-warning` | `#ffffff` | `#431407` |
+| `--lf-color-warning-accent` | `#fef3c7` | `#431407` |
+| `--lf-color-warning-contrast` | `#78350f` | `#fde68a` |
+| `--lf-color-warning-complementary` | `#dc2626` | `#f87171` |
+
+#### Info (blue)
+
+| Token | Light | Dark |
+|---|---|---|
+| `--lf-color-info` | `#2563eb` | `#60a5fa` |
+| `--lf-color-info-hover` | `#1d4ed8` | `#3b82f6` |
+| `--lf-color-on-info` | `#ffffff` | `#172554` |
+| `--lf-color-info-accent` | `#dbeafe` | `#172554` |
+| `--lf-color-info-contrast` | `#1e3a8a` | `#93c5fd` |
+| `--lf-color-info-complementary` | `#7c3aed` | `#a78bfa` |
+
+#### Error (red)
+
+| Token | Light | Dark |
+|---|---|---|
+| `--lf-color-error` | `#dc2626` | `#f87171` |
+| `--lf-color-error-accent` | `#fee2e2` | `#450a0a` |
+| `--lf-color-error-contrast` | `#7f1d1d` | `#fca5a5` |
+| `--lf-color-error-complementary` | `#d97706` | `#fbbf24` |
+
+#### Surface, interactive, and form tokens
+
+| Token | Light | Dark | Group |
 |---|---|---|---|
-| `--lf-color-primary` | `#5b21b6` | `#7c3aed` | Colour — primary |
-| `--lf-color-primary-hover` | `#4c1d95` | `#6d28d9` | Colour — primary |
-| `--lf-color-on-primary` | `#ffffff` | `#ffffff` | Colour — primary |
-| `--lf-color-secondary` | `#ffffff` | `#1e1b4b` | Colour — secondary |
-| `--lf-color-secondary-hover` | `#f5f3ff` | `#2e2a5e` | Colour — secondary |
-| `--lf-color-secondary-border` | `#5b21b6` | `#7c3aed` | Colour — secondary |
-| `--lf-color-on-secondary` | `#4c1d95` | `#c4b5fd` | Colour — secondary |
-| `--lf-color-success` | `#16a34a` | `#4ade80` | Colour — success |
-| `--lf-color-success-hover` | `#15803d` | `#22c55e` | Colour — success |
-| `--lf-color-on-success` | `#ffffff` | `#052e16` | Colour — success |
-| `--lf-color-warning` | `#d97706` | `#fbbf24` | Colour — warning |
-| `--lf-color-warning-hover` | `#b45309` | `#f59e0b` | Colour — warning |
-| `--lf-color-on-warning` | `#ffffff` | `#431407` | Colour — warning |
-| `--lf-color-info` | `#2563eb` | `#60a5fa` | Colour — info |
-| `--lf-color-info-hover` | `#1d4ed8` | `#3b82f6` | Colour — info |
-| `--lf-color-on-info` | `#ffffff` | `#172554` | Colour — info |
-| `--lf-color-surface` | `#ffffff` | `#111827` | Colour — surface |
-| `--lf-color-surface-alt` | `#f9fafb` | `#1f2937` | Colour — surface |
-| `--lf-color-focus-ring` | `#7c3aed` | `#a78bfa` | Colour — interactive |
-| `--lf-color-label` | `#374151` | `#e5e7eb` | Colour — form |
-| `--lf-color-hint` | `#6b7280` | `#9ca3af` | Colour — form |
-| `--lf-color-error` | `#dc2626` | `#f87171` | Colour — form |
-| `--lf-color-input-bg` | `#ffffff` | `#1f2937` | Colour — form |
-| `--lf-color-input-text` | `#111827` | `#f9fafb` | Colour — form |
-| `--lf-color-input-border` | `#d1d5db` | `#374151` | Colour — form |
-| `--lf-color-input-border-focus` | `#5b21b6` | `#7c3aed` | Colour — form |
-| `--lf-color-input-placeholder` | `#9ca3af` | `#6b7280` | Colour — form |
-| `--lf-color-input-disabled-bg` | `#f3f4f6` | `#111827` | Colour — form |
-| `--lf-color-input-disabled-text` | `#9ca3af` | `#4b5563` | Colour — form |
-| `--lf-space-2` | `0.5rem` | — | Spacing |
-| `--lf-space-3` | `0.625rem` | — | Spacing |
-| `--lf-space-4` | `1rem` | — | Spacing |
-| `--lf-font-family-base` | `system-ui, …` | — | Typography |
-| `--lf-font-size-base` | `1rem` | — | Typography |
-| `--lf-font-size-sm` | `0.875rem` | — | Typography |
-| `--lf-font-weight-semibold` | `600` | — | Typography |
-| `--lf-line-height-base` | `1.2` | — | Typography |
-| `--lf-radius-sm` | `0.25rem` | — | Radius |
-| `--lf-radius-md` | `0.625rem` | — | Radius |
-| `--lf-transition-duration` | `150ms` | — | Motion |
-| `--lf-transition-easing` | `ease` | — | Motion |
-| `--lf-shadow-popover` | `0 4px 12px rgb(0 0 0 / 10%)` | `0 4px 16px rgb(0 0 0 / 40%)` | Shadow |
-| `--lf-checkbox-size` | `1.125rem` | — | Component sizes |
-| `--lf-radio-size` | `1.125rem` | — | Component sizes |
+| `--lf-color-surface` | `#ffffff` | `#111827` | Surface |
+| `--lf-color-surface-alt` | `#f9fafb` | `#1f2937` | Surface |
+| `--lf-color-focus-ring` | `#7c3aed` | `#a78bfa` | Interactive |
+| `--lf-color-label` | `#374151` | `#e5e7eb` | Form |
+| `--lf-color-hint` | `#6b7280` | `#9ca3af` | Form |
+| `--lf-color-input-bg` | `#ffffff` | `#1f2937` | Form |
+| `--lf-color-input-text` | `#111827` | `#f9fafb` | Form |
+| `--lf-color-input-border` | `#d1d5db` | `#374151` | Form |
+| `--lf-color-input-border-focus` | `#5b21b6` | `#7c3aed` | Form |
+| `--lf-color-input-placeholder` | `#9ca3af` | `#6b7280` | Form |
+| `--lf-color-input-disabled-bg` | `#f3f4f6` | `#111827` | Form |
+| `--lf-color-input-disabled-text` | `#9ca3af` | `#4b5563` | Form |
+
+#### Non-colour tokens
+
+| Token | Default | Group |
+|---|---|---|
+| `--lf-space-2` | `0.5rem` | Spacing |
+| `--lf-space-3` | `0.625rem` | Spacing |
+| `--lf-space-4` | `1rem` | Spacing |
+| `--lf-font-family-base` | `system-ui, …` | Typography |
+| `--lf-font-size-base` | `1rem` | Typography |
+| `--lf-font-size-sm` | `0.875rem` | Typography |
+| `--lf-font-weight-semibold` | `600` | Typography |
+| `--lf-line-height-base` | `1.2` | Typography |
+| `--lf-radius-sm` | `0.25rem` | Radius |
+| `--lf-radius-md` | `0.625rem` | Radius |
+| `--lf-transition-duration` | `150ms` | Motion |
+| `--lf-transition-easing` | `ease` | Motion |
+| `--lf-shadow-popover` | `0 4px 12px rgb(0 0 0 / 10%)` *(dark: 40%)* | Shadow |
+| `--lf-checkbox-size` | `1.125rem` | Component sizes |
+| `--lf-radio-size` | `1.125rem` | Component sizes |
 
 ### Overriding tokens
 
@@ -210,6 +273,16 @@ You can also force a mode with the `data-theme` attribute on any ancestor elemen
 /* scoped override */
 .checkout-form { --lf-radius-md: 0.25rem; }
 
-/* use the success colour for a custom "valid" badge */
-.badge-valid { background: var(--lf-color-success); color: var(--lf-color-on-success); }
+/* success alert using the full set */
+.alert-success {
+  background: var(--lf-color-success-accent);
+  border: 1px solid var(--lf-color-success);
+  color: var(--lf-color-success-contrast);
+}
+
+/* info badge */
+.badge-info {
+  background: var(--lf-color-info-accent);
+  color: var(--lf-color-info-contrast);
+}
 ```

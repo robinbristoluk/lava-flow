@@ -25,6 +25,13 @@
 //   success  – affirming / valid states  (green)
 //   warning  – cautionary states         (amber)
 //   info     – informational states      (blue)
+//
+// Each of the five roles (primary, success, warning, info, error) exposes three
+// additional palette variants:
+//
+//   {role}-accent        – light tint for badge/chip/alert backgrounds
+//   {role}-contrast      – deep shade for text or borders on light surfaces
+//   {role}-complementary – a harmoniously paired hue from a different colour family
 
 @layer lf-tokens {
   // ─── Shared light palette mixin ──────────────────────────────────────────
@@ -34,6 +41,9 @@
     --lf-color-primary: #5b21b6;
     --lf-color-primary-hover: #4c1d95;
     --lf-color-on-primary: #ffffff;
+    --lf-color-primary-accent: #ede9fe;        // light tint — badge/chip backgrounds
+    --lf-color-primary-contrast: #2e1065;      // deep shade — text/borders on light bg
+    --lf-color-primary-complementary: #f59e0b; // amber — classic violet+amber pairing
 
     // Secondary
     --lf-color-secondary: #ffffff;
@@ -45,16 +55,31 @@
     --lf-color-success: #16a34a;
     --lf-color-success-hover: #15803d;
     --lf-color-on-success: #ffffff;
+    --lf-color-success-accent: #dcfce7;        // light tint — success alert backgrounds
+    --lf-color-success-contrast: #14532d;      // deep shade — success text/borders
+    --lf-color-success-complementary: #0891b2; // cyan — harmonious with green
 
     // Warning (amber)
     --lf-color-warning: #d97706;
     --lf-color-warning-hover: #b45309;
     --lf-color-on-warning: #ffffff;
+    --lf-color-warning-accent: #fef3c7;        // light tint — warning alert backgrounds
+    --lf-color-warning-contrast: #78350f;      // deep shade — warning text/borders
+    --lf-color-warning-complementary: #dc2626; // red — warm amber+red pairing
 
     // Info (blue)
     --lf-color-info: #2563eb;
     --lf-color-info-hover: #1d4ed8;
     --lf-color-on-info: #ffffff;
+    --lf-color-info-accent: #dbeafe;           // light tint — info alert backgrounds
+    --lf-color-info-contrast: #1e3a8a;         // deep shade — info text/borders
+    --lf-color-info-complementary: #7c3aed;    // violet — classic blue+violet pairing
+
+    // Error (red)
+    --lf-color-error: #dc2626;
+    --lf-color-error-accent: #fee2e2;          // light tint — error alert backgrounds
+    --lf-color-error-contrast: #7f1d1d;        // deep shade — error text/borders
+    --lf-color-error-complementary: #d97706;   // amber — warm red+amber pairing
 
     // Surface
     --lf-color-surface: #ffffff;
@@ -66,7 +91,6 @@
     // Form / input
     --lf-color-label: #374151;
     --lf-color-hint: #6b7280;
-    --lf-color-error: #dc2626;
     --lf-color-input-bg: #ffffff;
     --lf-color-input-text: #111827;
     --lf-color-input-border: #d1d5db;
@@ -127,6 +151,9 @@
     --lf-color-primary: #7c3aed;
     --lf-color-primary-hover: #6d28d9;
     --lf-color-on-primary: #ffffff;
+    --lf-color-primary-accent: #1e1b4b;        // dark tint bg
+    --lf-color-primary-contrast: #c4b5fd;      // light violet for text on dark
+    --lf-color-primary-complementary: #fbbf24; // lighter amber for dark surfaces
 
     // Secondary
     --lf-color-secondary: #1e1b4b;
@@ -138,16 +165,31 @@
     --lf-color-success: #4ade80;
     --lf-color-success-hover: #22c55e;
     --lf-color-on-success: #052e16;
+    --lf-color-success-accent: #052e16;        // dark tint bg
+    --lf-color-success-contrast: #86efac;      // light green for text on dark
+    --lf-color-success-complementary: #22d3ee; // lighter cyan for dark surfaces
 
     // Warning — lighter amber
     --lf-color-warning: #fbbf24;
     --lf-color-warning-hover: #f59e0b;
     --lf-color-on-warning: #431407;
+    --lf-color-warning-accent: #431407;        // dark tint bg
+    --lf-color-warning-contrast: #fde68a;      // light amber for text on dark
+    --lf-color-warning-complementary: #f87171; // lighter red for dark surfaces
 
     // Info — lighter blue
     --lf-color-info: #60a5fa;
     --lf-color-info-hover: #3b82f6;
     --lf-color-on-info: #172554;
+    --lf-color-info-accent: #172554;           // dark tint bg
+    --lf-color-info-contrast: #93c5fd;         // light blue for text on dark
+    --lf-color-info-complementary: #a78bfa;    // lighter violet for dark surfaces
+
+    // Error
+    --lf-color-error: #f87171;
+    --lf-color-error-accent: #450a0a;          // dark tint bg
+    --lf-color-error-contrast: #fca5a5;        // light red for text on dark
+    --lf-color-error-complementary: #fbbf24;   // lighter amber for dark surfaces
 
     // Surface
     --lf-color-surface: #111827;
@@ -159,7 +201,6 @@
     // Form / input
     --lf-color-label: #e5e7eb;
     --lf-color-hint: #9ca3af;
-    --lf-color-error: #f87171;
     --lf-color-input-bg: #1f2937;
     --lf-color-input-text: #f9fafb;
     --lf-color-input-border: #374151;

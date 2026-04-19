@@ -86,26 +86,59 @@ const submitButton = () => html`
 
 // ─── Colour swatches helper ───────────────────────────────────────────────────
 
+const COLOUR_ROLES = ['primary', 'success', 'warning', 'info', 'error'] as const
+
+const SWATCH_VARIANTS = [
+  { suffix: '', label: 'base' },
+  { suffix: '-accent', label: 'accent' },
+  { suffix: '-contrast', label: 'contrast' },
+  { suffix: '-complementary', label: 'compl.' },
+] as const
+
+const swatchLabel = (text: string) => html`
+  <span
+    style="
+      color:var(--lf-color-label);
+      font-family:var(--lf-font-family-base, system-ui, sans-serif);
+      font-size:0.65rem;
+      text-align:center;
+    "
+  >${text}</span>
+`
+
 const colourSwatches = () => html`
-  <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem">
-    ${['primary', 'success', 'warning', 'info', 'error'].map(
+  <div style="display:flex; flex-direction:column; gap:0.75rem; margin-bottom:1.25rem">
+    ${COLOUR_ROLES.map(
       (role) => html`
-        <div style="display:flex; flex-direction:column; align-items:center; gap:0.25rem">
+        <div>
           <div
-            style="
-              background:var(--lf-color-${role});
-              border-radius:var(--lf-radius-sm, 0.25rem);
-              height:2rem;
-              width:3.5rem;
-            "
-          ></div>
-          <span
             style="
               color:var(--lf-color-label);
               font-family:var(--lf-font-family-base, system-ui, sans-serif);
               font-size:0.7rem;
+              font-weight:600;
+              margin-bottom:0.35rem;
+              text-transform:capitalize;
             "
-          >${role}</span>
+          >${role}</div>
+          <div style="display:flex; gap:0.35rem; flex-wrap:wrap">
+            ${SWATCH_VARIANTS.map(
+              ({ suffix, label }) => html`
+                <div style="display:flex; flex-direction:column; align-items:center; gap:0.2rem">
+                  <div
+                    style="
+                      background:var(--lf-color-${role}${suffix});
+                      border:1px solid rgb(0 0 0 / 8%);
+                      border-radius:var(--lf-radius-sm, 0.25rem);
+                      height:1.75rem;
+                      width:3rem;
+                    "
+                  ></div>
+                  ${swatchLabel(label)}
+                </div>
+              `
+            )}
+          </div>
         </div>
       `
     )}
